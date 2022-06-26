@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?><!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ui.auth.SignInFragment">-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/padding_xl">
+
+    <TextView
+        android:id="@+id/signInTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/auth"
+        android:textColor="@color/application"
+        android:textSize="@dimen/text_size_xl"
+        android:textStyle="bold" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:layout_marginBottom="@dimen/margin_sm"
+        android:text="@string/sign_in"
+        app:cornerRadius="40dp"
+        app:strokeColor="@color/application"
+        app:strokeWidth="@dimen/margin_sm" />
+
+    <ImageView
+        android:layout_width="@dimen/img_cup_width"
+        android:layout_height="250dp"
+        android:layout_marginTop="@dimen/margin_xl"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/cup" />
+
+</LinearLayout>
+
+    <!--
+    </FrameLayout>-->
