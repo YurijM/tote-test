@@ -3,7 +3,12 @@
 
     <string name="registration">Регистрация</string>
     <string name="auth">Авторизация</string>
+    <string name="gamblers">Участники</string>
+    <string name="profile">Профиль</string>
 
     <string name="sign_in">Войти</string>
     <string name="sign_up">Зарегистрироваться</string>
+    <string name="email">email</string>
+    <string name="password">Пароль</string>
+    <string name="password_confirm">Подтвердить пароль</string>
 </resources>

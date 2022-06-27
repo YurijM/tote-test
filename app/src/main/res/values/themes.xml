@@ -27,4 +27,19 @@
 
     <style name="Theme.Totetest.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="LayoutTextInput" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="errorEnabled">false</item>
+        <item name="android:layout_marginBottom">@dimen/margin_sm</item>
+    </style>
+
+    <style name="TextInput">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <!--<item name="android:padding">@dimen/padding</item>-->
+        <item name="android:inputType">textPersonName</item>
+    </style>
+
 </resources>

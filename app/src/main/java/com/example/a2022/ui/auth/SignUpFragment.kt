@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.a2022.R
-import com.example.a2022.databinding.FragmentSignInBinding
+import com.example.a2022.databinding.FragmentSignUpBinding
 import com.example.a2022.utils.APP_ACTIVITY
 import com.example.a2022.utils.toLog
 
-class SignInFragment : Fragment() {
-    private lateinit var binding: FragmentSignInBinding
+class SignUpFragment : Fragment() {
+    private lateinit var binding: FragmentSignUpBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -19,11 +18,10 @@ class SignInFragment : Fragment() {
     ): View {
         toLog("${javaClass.simpleName} - ${object{}.javaClass.enclosingMethod?.name}")
 
-        binding = FragmentSignInBinding.inflate(layoutInflater, container, false)
+        /*APP_ACTIVITY.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        APP_ACTIVITY.supportActionBar?.setDisplayShowHomeEnabled(true)*/
 
-        binding.signInToAuth.setOnClickListener {
-            APP_ACTIVITY.navController.navigate(R.id.action_signInFragment_to_gamblersFragment)
-        }
+        binding = FragmentSignUpBinding.inflate(layoutInflater, container, false)
 
         return binding.root
     }

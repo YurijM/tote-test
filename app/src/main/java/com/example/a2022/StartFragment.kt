@@ -16,12 +16,16 @@ class StartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toLog("${javaClass.simpleName} - ${object{}.javaClass.enclosingMethod.name}")
+        toLog("${javaClass.simpleName} - ${object{}.javaClass.enclosingMethod?.name}")
 
         binding = FragmentStartBinding.inflate(layoutInflater, container, false)
 
         binding.startSignIn.setOnClickListener {
             APP_ACTIVITY.navController.navigate(R.id.action_startFragment_to_signInFragment)
+        }
+
+        binding.startSignUp.setOnClickListener {
+            APP_ACTIVITY.navController.navigate(R.id.action_startFragment_to_signUpFragment)
         }
 
         return binding.root
