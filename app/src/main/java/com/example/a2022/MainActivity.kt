@@ -1,6 +1,8 @@
 package com.example.a2022
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
@@ -25,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         //supportActionBar?.title = prepareTitle(destination.label, arguments)
 
         supportActionBar?.title = destination.label
-        supportActionBar?.setDisplayHomeAsUpEnabled(!isStartDestination(destination))
+        supportActionBar?.setDisplayHomeAsUpEnabled(!isTopLevelDestination(destination))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,20 +50,40 @@ class MainActivity : AppCompatActivity() {
 
         // Если в шаблоне (xml) используется view <...FragmentContainerView>
         navController = (supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment).navController
+        navController.addOnDestinationChangedListener(destinationListener)
 
-        prepareRootNavController(isSignedIn())
-        onNavControllerActivated()
+        setStartFragment()
     }
 
-    private fun isSignedIn(): Boolean = true
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        if (true)
+        if (menu != null) {
+            menu.findItem(R.id.menu_item_admin).isVisible = false
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_item_exit -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun isSignedIn(): Boolean = false
     private fun isProfileFilled(): Boolean = false
 
-    private fun prepareRootNavController(isSignedIn: Boolean) {
+    private fun setStartFragment() {
         toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
 
         val graph = navController.navInflater.inflate(getMainNavigationGraphId())
 
-        if (isSignedIn) {
+        if (isSignedIn()) {
             graph.setStartDestination(
                 if (isProfileFilled()) {
                     getGamblersDestination()
@@ -76,13 +98,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getMainNavigationGraphId(): Int = R.navigation.main_graph
-
-    private fun getMainDestination(): Int = R.id.startFragment
-    private fun getGamblersDestination(): Int = R.id.gamblersFragment
-    private fun getProfileDestination(): Int = R.id.profileFragment
-
-    private fun isStartDestination(destination: NavDestination?): Boolean {
+    private fun isTopLevelDestination(destination: NavDestination?): Boolean {
         toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
 
         if (destination == null) return false
@@ -98,15 +114,16 @@ class MainActivity : AppCompatActivity() {
         return topLevelDestinations.contains(destination.id)
     }
 
-    private fun onNavControllerActivated() {
-        navController.removeOnDestinationChangedListener(destinationListener)
-        navController.addOnDestinationChangedListener(destinationListener)
-    }
+    private fun getMainNavigationGraphId(): Int = R.navigation.main_graph
+
+    private fun getMainDestination(): Int = R.id.startFragment
+    private fun getGamblersDestination(): Int = R.id.gamblersFragment
+    private fun getProfileDestination(): Int = R.id.profileFragment
 
     override fun onSupportNavigateUp(): Boolean = (navController.navigateUp() || super.onSupportNavigateUp())
 
     override fun onBackPressed() {
-        if (isStartDestination(navController.currentDestination)) {
+        if (isTopLevelDestination(navController.currentDestination)) {
             super.onBackPressed()
         } else {
             navController.popBackStack()
