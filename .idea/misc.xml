@@ -7,18 +7,23 @@
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/drawable/button_press.xml" value="0.232" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/drawable/ic_admin.xml" value="0.116" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/drawable/ic_copyright.xml" value="0.232" />
+        <entry key="..\:/Kotlin/tote-test/app/src/main/res/drawable/ic_games.xml" value="0.233" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/drawable/round.xml" value="0.232" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/drawable/rounded_button.xml" value="0.232" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/container_main.xml" value="0.365625" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/footer_main.xml" value="0.36666666666666664" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_gamblers.xml" value="0.2777777777777778" />
+        <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_games.xml" value="0.36666666666666664" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_profile.xml" value="0.18802083333333333" />
+        <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_prognosis.xml" value="0.36666666666666664" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_rating.xml" value="0.36666666666666664" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_sign_in.xml" value="0.25666666666666665" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_sign_up.xml" value="0.2777777777777778" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_start.xml" value="0.2777777777777778" />
+        <entry key="..\:/Kotlin/tote-test/app/src/main/res/layout/fragment_tabs.xml" value="0.36666666666666664" />
         <entry key="..\:/Kotlin/tote-test/app/src/main/res/menu/menu_main.xml" value="0.2777777777777778" />
+        <entry key="..\:/Kotlin/tote-test/app/src/main/res/menu/menu_tabs.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

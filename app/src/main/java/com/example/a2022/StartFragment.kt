@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.a2022.databinding.FragmentStartBinding
 import com.example.a2022.utils.APP_ACTIVITY
+import com.example.a2022.utils.findTopNavController
 import com.example.a2022.utils.toLog
 
 class StartFragment : Fragment() {
@@ -21,11 +22,11 @@ class StartFragment : Fragment() {
         binding = FragmentStartBinding.inflate(layoutInflater, container, false)
 
         binding.startSignIn.setOnClickListener {
-            APP_ACTIVITY.navController.navigate(R.id.action_startFragment_to_signInFragment)
+            findTopNavController().navigate(R.id.action_startFragment_to_signInFragment)
         }
 
         binding.startSignUp.setOnClickListener {
-            APP_ACTIVITY.navController.navigate(R.id.action_startFragment_to_signUpFragment)
+            findTopNavController().navigate(R.id.action_startFragment_to_signUpFragment)
         }
 
         return binding.root

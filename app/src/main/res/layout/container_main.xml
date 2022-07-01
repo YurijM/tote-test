@@ -18,8 +18,7 @@
             android:layout_height="match_parent"
             android:paddingHorizontal="@dimen/padding"
             android:paddingTop="@dimen/padding"
-            app:defaultNavHost="true"
-            app:navGraph="@navigation/main_graph" />
+            app:defaultNavHost="true" />
     </LinearLayout>
 
 </ScrollView>

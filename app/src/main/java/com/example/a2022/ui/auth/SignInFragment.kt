@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.example.a2022.R
 import com.example.a2022.databinding.FragmentSignInBinding
 import com.example.a2022.utils.APP_ACTIVITY
+import com.example.a2022.utils.findTopNavController
 import com.example.a2022.utils.toLog
 
 class SignInFragment : Fragment() {
@@ -22,7 +23,7 @@ class SignInFragment : Fragment() {
         binding = FragmentSignInBinding.inflate(layoutInflater, container, false)
 
         binding.signInToAuth.setOnClickListener {
-            APP_ACTIVITY.navController.navigate(R.id.action_signInFragment_to_ratingFragment)
+            findTopNavController().navigate(R.id.action_signInFragment_to_tabsFragment)
         }
 
         return binding.root
