@@ -1,8 +1,10 @@
 package com.example.a2022
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
@@ -10,7 +12,9 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.example.a2022.databinding.ActivityMainBinding
 import com.example.a2022.utils.APP_ACTIVITY
+import com.example.a2022.utils.YEAR_START
 import com.example.a2022.utils.toLog
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -18,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private var topLevelDestinations = setOf(
         getMainDestination(),
-        getGamblersDestination()
+        getRatingDestination()
     )
 
     private val destinationListener = NavController.OnDestinationChangedListener { _, destination, _ ->
@@ -51,6 +55,8 @@ class MainActivity : AppCompatActivity() {
         // Если в шаблоне (xml) используется view <...FragmentContainerView>
         navController = (supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment).navController
         navController.addOnDestinationChangedListener(destinationListener)
+
+        setCopyright()
 
         setStartFragment()
     }
@@ -86,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         if (isSignedIn()) {
             graph.setStartDestination(
                 if (isProfileFilled()) {
-                    getGamblersDestination()
+                    getRatingDestination()
                 } else {
                     getProfileDestination()
                 }
@@ -117,8 +123,22 @@ class MainActivity : AppCompatActivity() {
     private fun getMainNavigationGraphId(): Int = R.navigation.main_graph
 
     private fun getMainDestination(): Int = R.id.startFragment
-    private fun getGamblersDestination(): Int = R.id.gamblersFragment
+    private fun getRatingDestination(): Int = R.id.ratingFragment
     private fun getProfileDestination(): Int = R.id.profileFragment
+
+    private fun setCopyright() {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val copyright = binding.mainFooter.copyrightYear
+
+        if (year != YEAR_START) {
+            val strYear = "$YEAR_START-$year"
+            copyright.text = strYear
+        } else {
+            copyright.text = YEAR_START.toString()
+        }
+    }
+
 
     override fun onSupportNavigateUp(): Boolean = (navController.navigateUp() || super.onSupportNavigateUp())
 

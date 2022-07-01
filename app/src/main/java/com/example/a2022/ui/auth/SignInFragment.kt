@@ -22,7 +22,7 @@ class SignInFragment : Fragment() {
         binding = FragmentSignInBinding.inflate(layoutInflater, container, false)
 
         binding.signInToAuth.setOnClickListener {
-            APP_ACTIVITY.navController.navigate(R.id.action_signInFragment_to_gamblersFragment)
+            APP_ACTIVITY.navController.navigate(R.id.action_signInFragment_to_ratingFragment)
         }
 
         return binding.root

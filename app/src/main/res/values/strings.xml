@@ -3,7 +3,7 @@
 
     <string name="registration">Регистрация</string>
     <string name="auth">Авторизация</string>
-    <string name="gamblers">Участники</string>
+    <string name="rating">Рейтинг</string>
     <string name="profile">Профиль</string>
 
     <string name="sign_in">Войти</string>

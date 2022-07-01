@@ -31,13 +31,14 @@
         android:label="@string/auth"
         tools:layout="@layout/fragment_sign_in" >
         <action
-            android:id="@+id/action_signInFragment_to_gamblersFragment"
-            app:destination="@id/gamblersFragment"
+            android:id="@+id/action_signInFragment_to_ratingFragment"
+            app:destination="@id/ratingFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/slide_out_right"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/slide_out_right"
-            app:popUpTo="@id/main_graph" />
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -45,15 +46,29 @@
         android:label="@string/registration"
         tools:layout="@layout/fragment_sign_up" >
         <action
+            android:id="@+id/action_signInFragment_to_ratingFragment"
+            app:destination="@id/ratingFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
+        <action
             android:id="@+id/action_signUpFragment_to_profileFragment"
             app:destination="@id/profileFragment"
-            app:popUpTo="@id/main_graph" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/slide_out_right"
+            app:popUpTo="@id/signUpFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/gamblersFragment"
-        android:name="com.example.a2022.ui.gamblers.GamblersFragment"
-        android:label="@string/gamblers"
-        tools:layout="@layout/fragment_gamblers" />
+        android:id="@+id/ratingFragment"
+        android:name="com.example.a2022.ui.tabs.rating.RatingFragment"
+        android:label="@string/rating"
+        tools:layout="@layout/fragment_rating" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.a2022.ui.profile.ProfileFragment"
