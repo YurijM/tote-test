@@ -93,7 +93,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean = (navController?.navigateUp() ?: false) || super.onSupportNavigateUp()
 
-
     override fun onBackPressed() {
         if (isStartDestination(navController?.currentDestination)) {
             super.onBackPressed()
