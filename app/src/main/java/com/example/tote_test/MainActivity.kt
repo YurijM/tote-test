@@ -1,4 +1,4 @@
-package com.example.a2022
+package com.example.tote_test
 
 import android.os.Bundle
 import android.view.Menu
@@ -12,11 +12,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.example.a2022.databinding.ActivityMainBinding
-import com.example.a2022.ui.tabs.TabsFragment
-import com.example.a2022.utils.APP_ACTIVITY
-import com.example.a2022.utils.YEAR_START
-import com.example.a2022.utils.toLog
+import com.example.tote_test.databinding.ActivityMainBinding
+import com.example.tote_test.ui.tabs.TabsFragment
+import com.example.tote_test.utils.APP_ACTIVITY
+import com.example.tote_test.utils.YEAR_START
+import com.example.tote_test.utils.toLog
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -70,9 +72,23 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)
 
         setCopyright()
+
+        // Write a message to the database
+        val database = Firebase.database
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Hello, World!")
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        menu.findItem(R.id.menu_item_admin).isVisible = false
+
+        return true
+    }
+
+    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
 
         if (menu != null) {
@@ -80,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         return true
-    }
+    }*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

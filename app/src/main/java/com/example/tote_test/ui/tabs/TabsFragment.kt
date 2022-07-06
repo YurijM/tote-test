@@ -1,4 +1,4 @@
-package com.example.a2022.ui.tabs
+package com.example.tote_test.ui.tabs
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.a2022.R
-import com.example.a2022.databinding.FragmentTabsBinding
+import com.example.tote_test.R
+import com.example.tote_test.databinding.FragmentTabsBinding
 
 class TabsFragment : Fragment() {
     private lateinit var binding: FragmentTabsBinding

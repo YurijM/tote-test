@@ -1,15 +1,14 @@
-package com.example.a2022.ui.auth
+package com.example.tote_test.ui.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.a2022.R
-import com.example.a2022.databinding.FragmentSignInBinding
-import com.example.a2022.utils.APP_ACTIVITY
-import com.example.a2022.utils.findTopNavController
-import com.example.a2022.utils.toLog
+import com.example.tote_test.R
+import com.example.tote_test.databinding.FragmentSignInBinding
+import com.example.tote_test.utils.findTopNavController
+import com.example.tote_test.utils.toLog
 
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding

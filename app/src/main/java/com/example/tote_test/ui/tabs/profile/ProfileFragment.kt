@@ -1,15 +1,15 @@
-package com.example.a2022.ui.tabs.rating
+package com.example.tote_test.ui.tabs.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.a2022.databinding.FragmentRatingBinding
-import com.example.a2022.utils.toLog
+import com.example.tote_test.databinding.FragmentProfileBinding
+import com.example.tote_test.utils.toLog
 
-class RatingFragment : Fragment() {
-    private lateinit var binding: FragmentRatingBinding
+class ProfileFragment : Fragment() {
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -17,7 +17,7 @@ class RatingFragment : Fragment() {
     ): View {
         toLog("${javaClass.simpleName} - ${object{}.javaClass.enclosingMethod?.name}")
 
-        binding = FragmentRatingBinding.inflate(layoutInflater, container, false)
+        binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
 
         return binding.root
     }

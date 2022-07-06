@@ -1,6 +1,6 @@
-package com.example.a2022.utils
+package com.example.tote_test.utils
 
-import com.example.a2022.MainActivity
+import com.example.tote_test.MainActivity
 
 lateinit var APP_ACTIVITY: MainActivity
 const val KEY_LOG = "logTote"

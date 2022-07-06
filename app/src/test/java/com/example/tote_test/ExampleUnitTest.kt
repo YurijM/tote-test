@@ -1,4 +1,4 @@
-package com.example.a2022
+package com.example.tote_test
 
 import org.junit.Test
 

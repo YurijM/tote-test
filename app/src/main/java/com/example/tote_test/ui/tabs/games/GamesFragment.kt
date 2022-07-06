@@ -1,12 +1,12 @@
-package com.example.a2022.ui.tabs.games
+package com.example.tote_test.ui.tabs.games
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.a2022.databinding.FragmentGamesBinding
-import com.example.a2022.utils.toLog
+import com.example.tote_test.databinding.FragmentGamesBinding
+import com.example.tote_test.utils.toLog
 
 class GamesFragment : Fragment() {
     private lateinit var binding: FragmentGamesBinding

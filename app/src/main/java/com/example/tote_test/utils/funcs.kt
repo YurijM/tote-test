@@ -1,4 +1,4 @@
-package com.example.a2022.utils
+package com.example.tote_test.utils
 
 import android.util.Log
 import android.widget.Toast
@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import com.example.a2022.R
+import com.example.tote_test.R
 
 fun showToast(message: String) {
     Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_LONG).show()

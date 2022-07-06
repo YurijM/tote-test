@@ -1,14 +1,13 @@
-package com.example.a2022
+package com.example.tote_test
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.a2022.databinding.FragmentStartBinding
-import com.example.a2022.utils.APP_ACTIVITY
-import com.example.a2022.utils.findTopNavController
-import com.example.a2022.utils.toLog
+import com.example.tote_test.databinding.FragmentStartBinding
+import com.example.tote_test.utils.findTopNavController
+import com.example.tote_test.utils.toLog
 
 class StartFragment : Fragment() {
     private lateinit var binding: FragmentStartBinding

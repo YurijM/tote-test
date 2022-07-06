@@ -1,13 +1,12 @@
-package com.example.a2022.ui.auth
+package com.example.tote_test.ui.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.a2022.databinding.FragmentSignUpBinding
-import com.example.a2022.utils.APP_ACTIVITY
-import com.example.a2022.utils.toLog
+import com.example.tote_test.databinding.FragmentSignUpBinding
+import com.example.tote_test.utils.toLog
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
