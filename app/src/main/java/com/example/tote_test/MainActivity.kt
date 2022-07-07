@@ -74,10 +74,10 @@ class MainActivity : AppCompatActivity() {
         setCopyright()
 
         // Write a message to the database
-        val database = Firebase.database
+        /*val database = Firebase.database
         val myRef = database.getReference("message")
 
-        myRef.setValue("Hello, World!")
+        myRef.setValue("Hello, World!")*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -87,16 +87,6 @@ class MainActivity : AppCompatActivity() {
 
         return true
     }
-
-    /*override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-
-        if (menu != null) {
-            menu.findItem(R.id.menu_item_admin).isVisible = false
-        }
-
-        return true
-    }*/
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

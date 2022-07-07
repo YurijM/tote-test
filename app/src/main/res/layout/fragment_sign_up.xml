@@ -6,6 +6,7 @@
     android:layout_gravity="top"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:paddingHorizontal="@dimen/padding_lg"
     android:paddingTop="@dimen/padding_xl">
 
     <com.google.android.material.textfield.TextInputLayout
