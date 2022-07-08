@@ -13,10 +13,10 @@ import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.tote_test.databinding.ActivityMainBinding
+import com.example.tote_test.firebase.FirebaseRepository
 import com.example.tote_test.ui.tabs.TabsFragment
-import com.example.tote_test.utils.APP_ACTIVITY
-import com.example.tote_test.utils.YEAR_START
-import com.example.tote_test.utils.toLog
+import com.example.tote_test.utils.*
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import java.util.*
@@ -52,6 +52,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        REPOSITORY = FirebaseRepository()
+
+        AppPreferences.getPreferences(this)
+
         APP_ACTIVITY = this
 
         setSupportActionBar(binding.toolbar)
@@ -66,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         //navController = (supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment).navController
         //navController.addOnDestinationChangedListener(destinationListener)
         val navController = getRootNavController()
-        prepareRootNavController(isSignedIn(), navController)
+        prepareRootNavController(navController)
         onNavControllerActivated(navController)
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)
@@ -91,6 +95,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_item_exit -> {
+                REPOSITORY.signOut()
                 finish()
             }
         }
@@ -113,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun prepareRootNavController(isSignedIn: Boolean, navController: NavController) {
+    private fun prepareRootNavController(navController: NavController) {
         val graph = navController.navInflater.inflate(getMainNavigationGraphId())
 
        /* graph.setStartDestination(
@@ -125,7 +130,7 @@ class MainActivity : AppCompatActivity() {
         )
         navController.graph = graph*/
 
-        if (isSignedIn) {
+        if (AppPreferences.getIsAuth()) {
             graph.setStartDestination(
                 if (isProfileFilled()) {
                     getTabsDestination()
@@ -152,7 +157,6 @@ class MainActivity : AppCompatActivity() {
         return navHost.navController
     }
 
-    private fun isSignedIn(): Boolean = false
     private fun isProfileFilled(): Boolean = false
 
     private fun isStartDestination(destination: NavDestination?): Boolean {

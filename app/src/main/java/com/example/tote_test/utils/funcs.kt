@@ -16,6 +16,11 @@ fun toLog(message: String) {
     Log.i(KEY_LOG, message)
 }
 
+fun fixError(error: String) {
+    showToast(error)
+    Log.i(KEY_LOG, error)
+}
+
 fun Fragment.findTopNavController(): NavController {
     val topLevelHost = requireActivity().supportFragmentManager.findFragmentById(R.id.tabsContainer) as NavHostFragment?
     return topLevelHost?.navController ?: findNavController()
