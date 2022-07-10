@@ -77,6 +77,8 @@ class MainActivity : AppCompatActivity() {
 
         setCopyright()
 
+        initFirebase()
+
         // Write a message to the database
         /*val database = Firebase.database
         val myRef = database.getReference("message")
@@ -121,14 +123,14 @@ class MainActivity : AppCompatActivity() {
     private fun prepareRootNavController(navController: NavController) {
         val graph = navController.navInflater.inflate(getMainNavigationGraphId())
 
-       /* graph.setStartDestination(
-            if (isSignedIn) {
-                getTabsDestination()
-            } else {
-                getSignInDestination()
-            }
-        )
-        navController.graph = graph*/
+        /* graph.setStartDestination(
+             if (isSignedIn) {
+                 getTabsDestination()
+             } else {
+                 getSignInDestination()
+             }
+         )
+         navController.graph = graph*/
 
         if (AppPreferences.getIsAuth()) {
             graph.setStartDestination(
@@ -194,6 +196,11 @@ class MainActivity : AppCompatActivity() {
     private fun getMainDestination(): Int = R.id.startFragment
     private fun getTabsDestination(): Int = R.id.tabsFragment
     private fun getProfileDestination(): Int = R.id.profileFragment
+
+    private fun initFirebase() {
+        REPOSITORY = FirebaseRepository()
+        REPOSITORY.initDB()
+    }
 
     private fun setCopyright() {
         val c = Calendar.getInstance()

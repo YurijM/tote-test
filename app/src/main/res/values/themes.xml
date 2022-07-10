@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.Totetest" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
@@ -40,6 +40,13 @@
         <item name="android:singleLine">true</item>
         <!--<item name="android:padding">@dimen/padding</item>-->
         <item name="android:inputType">textPersonName</item>
+    </style>
+
+    <style name="RadioButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:buttonTint">@color/application</item>
     </style>
 
 </resources>

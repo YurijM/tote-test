@@ -10,6 +10,7 @@
     android:paddingTop="@dimen/padding_xl">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpLayoutInputEmail"
         style="@style/LayoutTextInput"
         android:hint="@string/email">
 
@@ -21,6 +22,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpLayoutInputPassword"
         style="@style/LayoutTextInput"
         android:hint="@string/password"
         app:passwordToggleEnabled="true">
@@ -33,12 +35,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/signUpLayoutInputPasswordConfirm"
         style="@style/LayoutTextInput"
         android:hint="@string/password"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/signUpInputConfirmPassword"
+            android:id="@+id/signUpInputPasswordConfirm"
             style="@style/LayoutTextInput"
             android:inputType="textPassword" />
 
@@ -46,6 +49,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/signUpToRegistration"
+        android:enabled="false"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
