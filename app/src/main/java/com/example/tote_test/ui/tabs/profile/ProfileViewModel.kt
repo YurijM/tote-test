@@ -21,16 +21,16 @@ class ProfileViewModel() : ViewModel() {
         showProgress()
         REPOSITORY.getGamblerLiveData(_profile)
 
-        viewModelScope.launch(Dispatchers.Main) {
+        /*viewModelScope.launch(Dispatchers.Main) {
             hideProgress()
-        }
+        }*/
     }
 
-    private fun hideProgress() {
+    fun hideProgress() {
         _inProgress.value = false
     }
 
-    private fun showProgress() {
+    fun showProgress() {
         _inProgress.value = true
     }
 }

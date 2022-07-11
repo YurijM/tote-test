@@ -20,4 +20,6 @@
     <dimen name="img_cup_height">240dp</dimen>
     <dimen name="img_size_author">28dp</dimen>
     <dimen name="height_footer">36dp</dimen>
+
+    <dimen name="profile_size_photo">100dp</dimen>
 </resources>

@@ -25,7 +25,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/profileFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             tools:text="@string/points"
             android:textStyle="bold" />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/profileTopLayout"
@@ -57,14 +57,22 @@
         android:layout_height="wrap_content"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/profileFields">
+        app:layout_constraintTop_toBottomOf="@id/profileEmail">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginEnd="@dimen/margin_sm"
+            android:layout_weight="1"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profileStake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                tools:text="@string/stake" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/profileLayoutNickname"
@@ -113,10 +121,19 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/profilePoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                tools:text="@string/points" />
+
             <ImageView
                 android:id="@+id/profilePhoto"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="@dimen/profile_size_photo"
+                android:layout_marginTop="@dimen/margin_sm"
                 android:contentDescription="@string/app_name"
                 android:gravity="top"
                 android:src="@drawable/user" />
@@ -129,6 +146,7 @@
                 android:layout_marginTop="@dimen/margin_sm"
                 android:text="@string/load_photo"
                 android:textSize="@dimen/text_size_sm" />
+
         </LinearLayout>
 
     </LinearLayout>

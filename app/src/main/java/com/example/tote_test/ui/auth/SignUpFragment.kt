@@ -78,7 +78,7 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
-    private fun checkFieldBlank(
+    /*private fun checkFieldBlank(
         input: String,
         layout: TextInputLayout,
         fieldName: String
@@ -94,9 +94,9 @@ class SignUpFragment : Fragment() {
         }
 
         return result
-    }
+    }*/
 
-    private fun checkMinLength(
+    /*private fun checkMinLength(
         minValue: Int,
         input: Editable,
         layout: TextInputLayout,
@@ -113,7 +113,7 @@ class SignUpFragment : Fragment() {
         }
 
         return result
-    }
+    }*/
 
     private fun comparePassword(password: String, confirmPassword: String): Boolean {
         var result = false

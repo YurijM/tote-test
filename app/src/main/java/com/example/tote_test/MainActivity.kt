@@ -166,8 +166,6 @@ class MainActivity : AppCompatActivity() {
         return navHost.navController
     }
 
-    private fun isProfileFilled(): Boolean = false
-
     private fun isStartDestination(destination: NavDestination?): Boolean {
         if (destination == null) return false
 
