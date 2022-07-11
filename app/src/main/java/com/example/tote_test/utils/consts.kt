@@ -2,7 +2,7 @@ package com.example.tote_test.utils
 
 import com.example.tote_test.MainActivity
 import com.example.tote_test.firebase.FirebaseRepository
-import com.example.tote_test.models.Gambler
+import com.example.tote_test.models.GamblerModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.storage.StorageReference
@@ -23,7 +23,7 @@ const val CHILD_ID = "id"
 
 const val NODE_GAMBLERS = "gamblers"
 
-lateinit var GAMBLER: Gambler
+var GAMBLER = GamblerModel()
 lateinit var CURRENT_ID: String
 lateinit var EMAIL: String
 lateinit var PASSWORD: String

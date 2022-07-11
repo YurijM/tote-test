@@ -1,8 +1,13 @@
 package com.example.tote_test.firebase
 
+import androidx.lifecycle.MutableLiveData
+import com.example.tote_test.models.GamblerModel
 import com.example.tote_test.utils.*
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 
 class FirebaseRepository {
@@ -39,7 +44,7 @@ class FirebaseRepository {
     }
 
 
-    fun connectionToDatabase(onSuccess: () -> Unit) {
+    fun signIn(onSuccess: () -> Unit) {
         if (AppPreferences.getIsAuth()) {
             onSuccess()
         } else {
@@ -64,5 +69,33 @@ class FirebaseRepository {
         REF_STORAGE_ROOT = FirebaseStorage.getInstance().reference
 
         CURRENT_ID = AUTH.currentUser?.uid.toString()
+    }
+
+    /*
+    Gamblers Repository
+     */
+    fun getGamblerLiveData(liveData: MutableLiveData<GamblerModel>) {
+        REF_DB_ROOT.child(NODE_GAMBLERS).child(CURRENT_ID).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                GAMBLER = snapshot.getValue(GamblerModel::class.java) ?: GamblerModel()
+                liveData.postValue(GAMBLER)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                fixError("FirebaseRepository-getGambler-onCancelled: ${error.message}")
+            }
+        })
+    }
+
+    fun getGambler() {
+        REF_DB_ROOT.child(NODE_GAMBLERS).child(CURRENT_ID).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                GAMBLER = snapshot.getValue(GamblerModel::class.java) ?: GamblerModel()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                fixError("FirebaseRepository-getGambler-onCancelled: ${error.message}")
+            }
+        })
     }
 }

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -24,6 +25,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var navController: NavController? = null
+    private lateinit var viewModel: MainViewModel
 
     private var topLevelDestinations = setOf(
         getMainDestination(),
@@ -54,6 +56,13 @@ class MainActivity : AppCompatActivity() {
 
         REPOSITORY = FirebaseRepository()
 
+        initFirebase()
+
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel.getGamblerLiveData()
+
+        observeGambler()
+
         AppPreferences.getPreferences(this)
 
         APP_ACTIVITY = this
@@ -77,8 +86,6 @@ class MainActivity : AppCompatActivity() {
 
         setCopyright()
 
-        initFirebase()
-
         // Write a message to the database
         /*val database = Firebase.database
         val myRef = database.getReference("message")
@@ -97,7 +104,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_item_exit -> {
-                REPOSITORY.signOut()
+                viewModel.signOut()
                 finish()
             }
         }
@@ -213,5 +220,11 @@ class MainActivity : AppCompatActivity() {
         } else {
             copyright.text = YEAR_START.toString()
         }
+    }
+
+    private fun observeGambler() = viewModel.currentGambler.observe(this) {
+        GAMBLER = it
+        toLog("MainActivity-observeGambler: $GAMBLER")
+        // TODO("Например, в дальнейшем, менять фото в AppBar (Toolbar) и т.п.")
     }
 }

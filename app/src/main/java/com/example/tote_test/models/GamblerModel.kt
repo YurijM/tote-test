@@ -2,7 +2,7 @@ package com.example.tote_test.models
 
 import com.example.tote_test.utils.EMPTY
 
-data class Gambler(
+data class GamblerModel(
     val id: String = "",
     val email: String = "",
     val nickname: String = "",

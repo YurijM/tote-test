@@ -16,8 +16,8 @@
     <string name="sign_in">Войти</string>
     <string name="sign_up">Зарегистрироваться</string>
     <string name="email">email</string>
-    <string name="stake">ставка</string>
-    <string name="points">кол-во очков</string>
+    <string name="stake">ставка: %1$dруб.</string>
+    <string name="points">кол-во очков: %1$.2f</string>
     <string name="password">Пароль</string>
     <string name="password_confirm">Подтвердить пароль</string>
 

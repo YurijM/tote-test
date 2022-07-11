@@ -24,7 +24,7 @@ class SignInFragment : Fragment() {
             EMAIL = binding.signInInputEmail.text.toString()
             PASSWORD = binding.signInInputPassword.text.toString()
 
-            REPOSITORY.connectionToDatabase {
+            REPOSITORY.signIn {
                 AppPreferences.setIsAuth(true)
                 findTopNavController().navigate(R.id.action_signInFragment_to_tabsFragment)
             }
