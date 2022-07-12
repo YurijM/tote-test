@@ -14,9 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tote_test.R
 import com.example.tote_test.databinding.FragmentProfileBinding
-import com.example.tote_test.utils.EMPTY
-import com.example.tote_test.utils.checkFieldBlank
-import com.example.tote_test.utils.toLog
+import com.example.tote_test.models.GamblerModel
+import com.example.tote_test.utils.*
 import com.squareup.picasso.Picasso
 
 class ProfileFragment : Fragment() {
@@ -24,13 +23,14 @@ class ProfileFragment : Fragment() {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var launcher: ActivityResultLauncher<Intent>
 
-    var photoUri = EMPTY
+    private var profile = GamblerModel()
 
-    var isNicknameFilled = false
-    var isFamilyFilled = false
-    var isNameFilled = false
-    var isGenderFilled = false
-    var isPhotoUrlFilled = false
+    private var isNicknameFilled = false
+    private var isFamilyFilled = false
+    private var isNameFilled = false
+    private var isGenderFilled = false
+    private var isPhotoUriFilled = false
+    private var isStakeFilled = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,9 +42,24 @@ class ProfileFragment : Fragment() {
         viewModel.getGamblerLiveData()
 
         observeProfile()
+        observePhotoUri()
         observeInProgress()
 
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
+
+        binding.profileStake.addTextChangedListener {
+            if (it != null) {
+                isStakeFilled = (GAMBLER.stake != 0)
+
+                if (isStakeFilled) {
+                    binding.profileErrorStake.visibility = View.GONE
+                } else {
+                    binding.profileErrorStake.visibility = View.VISIBLE
+                }
+            }
+
+            binding.profileSave.isEnabled = isFieldsFilled()
+        }
 
         binding.profileInputNickname.addTextChangedListener {
             if (it != null) {
@@ -71,7 +86,20 @@ class ProfileFragment : Fragment() {
         }
 
         binding.profileGenderGroup.setOnCheckedChangeListener { _, checkedId ->
+            profile.gender = when (checkedId) {
+                binding.profileMan.id -> resources.getString(R.string.man)
+                binding.profileWoman.id -> resources.getString(R.string.woman)
+                else -> ""
+            }
+            viewModel.changeProfile(profile)
+
             isGenderFilled = (checkedId == binding.profileMan.id || checkedId == binding.profileWoman.id)
+
+            if (isGenderFilled) {
+                binding.profileErrorGender.visibility = View.GONE
+            } else {
+                binding.profileErrorGender.visibility = View.VISIBLE
+            }
 
             binding.profileSave.isEnabled = isFieldsFilled()
         }
@@ -79,16 +107,14 @@ class ProfileFragment : Fragment() {
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
-                photoUri = result.data?.data.toString()
                 val size = resources.getDimensionPixelSize(R.dimen.profile_size_photo)
                 Picasso.get()
                     .load(result.data?.data)
                     .resize(size, size)
                     .centerCrop()
                     .into(binding.profilePhoto)
-                //binding.profilePhoto.setImageURI(result.data?.data)
 
-                toLog("photoUri: $photoUri")
+                result.data?.data?.let { viewModel.changePhotoUri(it) }
             }
         }
 
@@ -104,9 +130,14 @@ class ProfileFragment : Fragment() {
                 && isFamilyFilled
                 && isNameFilled
                 && isGenderFilled
-                //&& (binding.profilePhoto)
+                && isPhotoUriFilled
+                && isStakeFilled
 
     private fun observeProfile() = viewModel.profile.observe(viewLifecycleOwner) {
+        toLog("observeProfile: $it")
+
+        profile = it
+
         binding.profileEmail.text = it.email
         binding.profileStake.text = getString(R.string.stake, it.stake)
         binding.profilePoints.text = getString(R.string.points, it.points)
@@ -122,19 +153,34 @@ class ProfileFragment : Fragment() {
             }
         )
 
-        //binding.profilePhoto.loadImage(it.photoUrl)
+        binding.profilePhoto.loadImage(it.photoUrl)
 
         viewModel.hideProgress()
+    }
+
+    private fun observePhotoUri() = viewModel.photoUri.observe(viewLifecycleOwner) {
+        binding.profilePhoto.setImageURI(it)
+
+        val uri = it.toString()
+        isPhotoUriFilled = (uri.isNotBlank() && uri != EMPTY )
+
+        if (isPhotoUriFilled) {
+            binding.profileErrorPhoto.visibility = View.GONE
+        } else {
+            binding.profileErrorPhoto.visibility = View.VISIBLE
+        }
+
+        binding.profileSave.isEnabled = isFieldsFilled()
     }
 
     private fun observeInProgress() = viewModel.inProgress.observe(viewLifecycleOwner) {
         if (it) {
             binding.profileProgressBar.visibility = View.VISIBLE
-            binding.profileSave.isEnabled = false
         } else {
             binding.profileProgressBar.visibility = View.INVISIBLE
-            binding.profileSave.isEnabled = true
         }
+
+        binding.profileSave.isEnabled = (!it && isFieldsFilled())
     }
 
     private fun getImage() {
@@ -143,5 +189,4 @@ class ProfileFragment : Fragment() {
         intent.action = Intent.ACTION_GET_CONTENT
         launcher.launch(intent)
     }
-
 }
