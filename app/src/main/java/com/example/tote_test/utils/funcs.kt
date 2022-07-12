@@ -2,19 +2,15 @@ package com.example.tote_test.utils
 
 import android.text.Editable
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.tote_test.R
-import com.example.tote_test.models.GamblerModel
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.squareup.picasso.Picasso
 
 fun showToast(message: String) {
     Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_LONG).show()
@@ -74,6 +70,14 @@ fun isProfileFilled(): Boolean =
             || (GAMBLER.photoUrl.isBlank() || GAMBLER.photoUrl == "empty")
             || GAMBLER.stake == 0
             )
+
+fun ImageView.loadImage(url: String) {
+    Picasso.get()
+        .load(url)
+        .fit()
+        .placeholder(R.drawable.user)
+        .into(this)
+}
 
 fun Fragment.findTopNavController(): NavController {
     val topLevelHost = requireActivity().supportFragmentManager.findFragmentById(R.id.tabsContainer) as NavHostFragment?
