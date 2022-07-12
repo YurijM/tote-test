@@ -21,9 +21,9 @@ class ProfileViewModel() : ViewModel() {
         showProgress()
         REPOSITORY.getGamblerLiveData(_profile)
 
-        /*viewModelScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.Main) {
             hideProgress()
-        }*/
+        }
     }
 
     fun hideProgress() {
