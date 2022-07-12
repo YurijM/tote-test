@@ -8,7 +8,7 @@ data class GamblerModel(
     val nickname: String = "",
     val family: String = "",
     val name: String = "",
-    val gender: String = "",
+    var gender: String = "",
     val photoUrl: String = EMPTY, // для Picasso поле не должно быть пустым
     val stake: Int = 0,
     val points: Double = 0.00,
