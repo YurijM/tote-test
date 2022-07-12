@@ -25,32 +25,6 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--<LinearLayout
-        android:id="@+id/profileFields"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/profileEmail">
-
-        <TextView
-            android:id="@+id/profileStake"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="@string/stake"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/profilePoints"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            tools:text="@string/points"
-            android:textStyle="bold" />
-
-    </LinearLayout>-->
-
     <LinearLayout
         android:id="@+id/profileTopLayout"
         android:layout_width="match_parent"
@@ -73,6 +47,17 @@
                 android:layout_gravity="center_horizontal"
                 android:textStyle="bold"
                 tools:text="@string/stake" />
+
+            <TextView
+                android:id="@+id/profileErrorStake"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/error_stake"
+                android:textColor="@color/design_default_color_error"
+                android:textSize="@dimen/text_size_sm"
+                android:visibility="gone" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/profileLayoutNickname"
@@ -113,6 +98,54 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/profileGenderLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/profileTopLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:text="@string/gender"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/text_size_lg" />
+
+                <RadioGroup
+                    android:id="@+id/profileGenderGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/profileMan"
+                        style="@style/RadioButton"
+                        android:text="@string/man" />
+
+                    <RadioButton
+                        android:id="@+id/profileWoman"
+                        style="@style/RadioButton"
+                        android:text="@string/woman" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/profileErrorGender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/error_gender"
+                android:textColor="@color/design_default_color_error"
+                android:textSize="@dimen/text_size_sm"
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -138,53 +171,27 @@
                 android:gravity="top"
                 android:src="@drawable/user" />
 
+            <TextView
+                android:id="@+id/profileErrorPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/error_photo_load"
+                android:textColor="@color/design_default_color_error"
+                android:textSize="@dimen/text_size_sm"
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/profileLoadPhoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_sm"
+                android:layout_gravity="center_horizontal|bottom"
                 android:text="@string/load_photo"
                 android:textSize="@dimen/text_size_sm" />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/profileGenderLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileTopLayout">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin"
-            android:text="@string/gender"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/text_size_lg" />
-
-        <RadioGroup
-            android:id="@+id/profileGenderGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/profileMan"
-                style="@style/RadioButton"
-                android:text="@string/man" />
-
-            <RadioButton
-                android:id="@+id/profileWoman"
-                style="@style/RadioButton"
-                android:text="@string/woman" />
-        </RadioGroup>
     </LinearLayout>
 
     <Button
@@ -195,6 +202,6 @@
         android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileGenderLayout" />
+        app:layout_constraintTop_toBottomOf="@id/profileTopLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
