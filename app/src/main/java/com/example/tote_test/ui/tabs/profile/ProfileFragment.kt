@@ -86,14 +86,22 @@ class ProfileFragment : Fragment() {
         }
 
         binding.profileGenderGroup.setOnCheckedChangeListener { _, checkedId ->
-            profile.gender = when (checkedId) {
-                binding.profileMan.id -> resources.getString(R.string.man)
-                binding.profileWoman.id -> resources.getString(R.string.woman)
-                else -> ""
-            }
-            viewModel.changeProfile(profile)
+            toLog("setOnCheckedChangeListener-binding.profileGenderGroup.checkedRadioButtonId: ${binding.profileGenderGroup.checkedRadioButtonId.toString()}")
+            toLog("setOnCheckedChangeListener-checkedId: ${checkedId.toString()}")
 
-            isGenderFilled = (checkedId == binding.profileMan.id || checkedId == binding.profileWoman.id)
+            if (binding.profileGenderGroup.checkedRadioButtonId != checkedId) {
+                profile.gender = when (checkedId) {
+                    binding.profileMan.id -> resources.getString(R.string.man)
+                    binding.profileWoman.id -> resources.getString(R.string.woman)
+                    else -> ""
+                }
+
+                toLog("setOnCheckedChangeListener: $profile")
+                viewModel.changeProfile(profile)
+            }
+
+            //isGenderFilled = (checkedId == binding.profileMan.id || checkedId == binding.profileWoman.id)
+            isGenderFilled = profile.gender.isNotBlank()
 
             if (isGenderFilled) {
                 binding.profileErrorGender.visibility = View.GONE

@@ -17,9 +17,6 @@ import com.example.tote_test.databinding.ActivityMainBinding
 import com.example.tote_test.firebase.FirebaseRepository
 import com.example.tote_test.ui.tabs.TabsFragment
 import com.example.tote_test.utils.*
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -59,9 +56,6 @@ class MainActivity : AppCompatActivity() {
         initFirebase()
 
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        viewModel.getGamblerLiveData()
-
-        observeGambler()
 
         AppPreferences.getPreferences(this)
 
@@ -218,11 +212,5 @@ class MainActivity : AppCompatActivity() {
         } else {
             copyright.text = YEAR_START.toString()
         }
-    }
-
-    private fun observeGambler() = viewModel.currentGambler.observe(this) {
-        GAMBLER = it
-        toLog("MainActivity-observeGambler: $GAMBLER")
-        // TODO("Например, в дальнейшем, менять фото в AppBar (Toolbar) и т.п.")
     }
 }
