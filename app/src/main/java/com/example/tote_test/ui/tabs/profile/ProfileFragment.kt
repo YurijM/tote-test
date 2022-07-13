@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tote_test.R
 import com.example.tote_test.databinding.FragmentProfileBinding
-import com.example.tote_test.models.GamblerModel
 import com.example.tote_test.utils.*
 import com.squareup.picasso.Picasso
 
@@ -22,8 +21,6 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: ProfileViewModel
     private lateinit var launcher: ActivityResultLauncher<Intent>
-
-    private var profile = GamblerModel()
 
     private var isNicknameFilled = false
     private var isFamilyFilled = false
@@ -39,7 +36,7 @@ class ProfileFragment : Fragment() {
         toLog("${javaClass.simpleName} - ${object{}.javaClass.enclosingMethod?.name}")
 
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
-        viewModel.getGamblerLiveData()
+        //viewModel.getGamblerLiveData()
 
         observeProfile()
         observePhotoUri()
@@ -63,6 +60,10 @@ class ProfileFragment : Fragment() {
 
         binding.profileInputNickname.addTextChangedListener {
             if (it != null) {
+                //if (it.toString() != GAMBLER.nickname) {
+                    viewModel.changeNickname(it.toString())
+                //}
+
                 isNicknameFilled = !checkFieldBlank(it.toString(), binding.profileLayoutNickname, getString(R.string.nickname))
 
                 binding.profileSave.isEnabled = isFieldsFilled()
@@ -71,6 +72,10 @@ class ProfileFragment : Fragment() {
 
         binding.profileInputFamily.addTextChangedListener {
             if (it != null) {
+                //if (it.toString() != GAMBLER.family) {
+                    viewModel.changeFamily(it.toString())
+                //}
+
                 isFamilyFilled = !checkFieldBlank(it.toString(), binding.profileLayoutFamily, getString(R.string.family))
 
                 binding.profileSave.isEnabled = isFieldsFilled()
@@ -79,6 +84,10 @@ class ProfileFragment : Fragment() {
 
         binding.profileInputName.addTextChangedListener {
             if (it != null) {
+                //if (it.toString() != GAMBLER.name) {
+                    viewModel.changeName(it.toString())
+                //}
+
                 isNameFilled = !checkFieldBlank(it.toString(), binding.profileLayoutName, getString(R.string.name))
 
                 binding.profileSave.isEnabled = isFieldsFilled()
@@ -86,22 +95,18 @@ class ProfileFragment : Fragment() {
         }
 
         binding.profileGenderGroup.setOnCheckedChangeListener { _, checkedId ->
-            toLog("setOnCheckedChangeListener-binding.profileGenderGroup.checkedRadioButtonId: ${binding.profileGenderGroup.checkedRadioButtonId.toString()}")
-            toLog("setOnCheckedChangeListener-checkedId: ${checkedId.toString()}")
-
-            if (binding.profileGenderGroup.checkedRadioButtonId != checkedId) {
-                profile.gender = when (checkedId) {
-                    binding.profileMan.id -> resources.getString(R.string.man)
-                    binding.profileWoman.id -> resources.getString(R.string.woman)
-                    else -> ""
-                }
-
-                toLog("setOnCheckedChangeListener: $profile")
-                viewModel.changeProfile(profile)
+            val gender = when (checkedId) {
+                binding.profileMan.id -> resources.getString(R.string.man)
+                binding.profileWoman.id -> resources.getString(R.string.woman)
+                else -> ""
             }
 
+            //if (gender != GAMBLER.gender) {
+                viewModel.changeGender(gender)
+            //}
+
             //isGenderFilled = (checkedId == binding.profileMan.id || checkedId == binding.profileWoman.id)
-            isGenderFilled = profile.gender.isNotBlank()
+            isGenderFilled = gender.isNotBlank()
 
             if (isGenderFilled) {
                 binding.profileErrorGender.visibility = View.GONE
@@ -143,8 +148,6 @@ class ProfileFragment : Fragment() {
 
     private fun observeProfile() = viewModel.profile.observe(viewLifecycleOwner) {
         toLog("observeProfile: $it")
-
-        profile = it
 
         binding.profileEmail.text = it.email
         binding.profileStake.text = getString(R.string.stake, it.stake)

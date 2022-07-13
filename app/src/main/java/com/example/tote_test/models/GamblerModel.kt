@@ -5,9 +5,9 @@ import com.example.tote_test.utils.EMPTY
 data class GamblerModel(
     val id: String = "",
     val email: String = "",
-    val nickname: String = "",
-    val family: String = "",
-    val name: String = "",
+    var nickname: String = "",
+    var family: String = "",
+    var name: String = "",
     var gender: String = "",
     val photoUrl: String = EMPTY, // для Picasso поле не должно быть пустым
     val stake: Int = 0,
