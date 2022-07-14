@@ -17,16 +17,10 @@ class ProfileViewModel() : ViewModel() {
     private val _profile = MutableLiveData<GamblerModel>()
     val profile: LiveData<GamblerModel> = _profile
 
-    private val _nickname = MutableLiveData<String>()
-    private val _family = MutableLiveData<String>()
-    private val _name = MutableLiveData<String>()
-    private val _gender = MutableLiveData<String>()
-
     private val _photoUri = MutableLiveData<Uri>()
     val photoUri: LiveData<Uri> = _photoUri
 
     init {
-        toLog("CURRENT_ID: $CURRENT_ID")
         getGamblerLiveData()
     }
 

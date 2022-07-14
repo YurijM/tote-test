@@ -48,11 +48,7 @@ class ProfileFragment : Fragment() {
             if (it != null) {
                 isStakeFilled = (GAMBLER.stake != 0)
 
-                if (isStakeFilled) {
-                    binding.profileErrorStake.visibility = View.GONE
-                } else {
-                    binding.profileErrorStake.visibility = View.VISIBLE
-                }
+                binding.profileErrorStake.visibility = if (isStakeFilled) View.GONE else View.VISIBLE
             }
 
             binding.profileSave.isEnabled = isFieldsFilled()
@@ -108,18 +104,15 @@ class ProfileFragment : Fragment() {
             //isGenderFilled = (checkedId == binding.profileMan.id || checkedId == binding.profileWoman.id)
             isGenderFilled = gender.isNotBlank()
 
-            if (isGenderFilled) {
-                binding.profileErrorGender.visibility = View.GONE
-            } else {
-                binding.profileErrorGender.visibility = View.VISIBLE
-            }
+            binding.profileErrorGender.visibility = if (isGenderFilled) View.GONE else View.VISIBLE
 
             binding.profileSave.isEnabled = isFieldsFilled()
         }
-
+        
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
+                toLog("binding.profilePhoto before: ${binding.profilePhoto.toString()}")
                 val size = resources.getDimensionPixelSize(R.dimen.profile_size_photo)
                 Picasso.get()
                     .load(result.data?.data)
@@ -127,6 +120,7 @@ class ProfileFragment : Fragment() {
                     .centerCrop()
                     .into(binding.profilePhoto)
 
+                toLog("binding.profilePhoto after: ${binding.profilePhoto.toString()}")
                 result.data?.data?.let { viewModel.changePhotoUri(it) }
             }
         }
@@ -164,7 +158,7 @@ class ProfileFragment : Fragment() {
             }
         )
 
-        binding.profilePhoto.loadImage(it.photoUrl)
+        binding.profilePhoto.loadImage(it.photoUri)
 
         viewModel.hideProgress()
     }

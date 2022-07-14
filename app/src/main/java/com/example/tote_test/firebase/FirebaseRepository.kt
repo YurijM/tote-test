@@ -27,7 +27,7 @@ class FirebaseRepository {
                 dataMap[GAMBLER_FAMILY] = ""
                 dataMap[GAMBLER_NAME] = ""
                 dataMap[GAMBLER_GENDER] = ""
-                dataMap[GAMBLER_PHOTO_URL] = EMPTY
+                dataMap[GAMBLER_PHOTO_URI] = EMPTY
                 dataMap[GAMBLER_STAKE] = 0
                 dataMap[GAMBLER_POINTS] = 0.00
                 dataMap[GAMBLER_PREV_PLACE] = 0

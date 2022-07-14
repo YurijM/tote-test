@@ -67,13 +67,13 @@ fun isProfileFilled(): Boolean =
             || GAMBLER.name.isBlank()
             || GAMBLER.family.isBlank()
             || GAMBLER.gender.isBlank()
-            || (GAMBLER.photoUrl.isBlank() || GAMBLER.photoUrl == "empty")
+            || (GAMBLER.photoUri.isBlank() || GAMBLER.photoUri == "empty")
             || GAMBLER.stake == 0
             )
 
-fun ImageView.loadImage(url: String) {
+fun ImageView.loadImage(uri: String) {
     Picasso.get()
-        .load(url)
+        .load(uri)
         .fit()
         .placeholder(R.drawable.user)
         .into(this)
