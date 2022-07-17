@@ -135,7 +135,7 @@ class MainActivity : AppCompatActivity() {
 
         if (AppPreferences.getIsAuth()) {
             graph.setStartDestination(
-                if (isProfileFilled()) {
+                if (isProfileFilled(GAMBLER)) {
                     getTabsDestination()
                 } else {
                     getProfileDestination()

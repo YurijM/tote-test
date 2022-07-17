@@ -161,11 +161,14 @@
 
             <ImageView
                 android:id="@+id/profilePhoto"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/profile_size_photo"
                 android:layout_height="@dimen/profile_size_photo"
                 android:layout_marginTop="@dimen/margin_sm"
+                android:scaleType="centerCrop"
                 android:contentDescription="@string/app_name"
                 android:gravity="top"
+                android:layout_gravity="center"
+                android:tag="@string/no_photo"
                 android:src="@drawable/user" />
 
             <TextView

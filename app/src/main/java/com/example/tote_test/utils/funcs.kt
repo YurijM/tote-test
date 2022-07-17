@@ -5,10 +5,12 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.tote_test.R
+import com.example.tote_test.models.GamblerModel
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 
@@ -62,18 +64,18 @@ fun checkMinLength(
     return result
 }
 
-fun isProfileFilled(): Boolean =
-    !(GAMBLER.nickname.isBlank()
-            || GAMBLER.name.isBlank()
-            || GAMBLER.family.isBlank()
-            || GAMBLER.gender.isBlank()
-            || (GAMBLER.photoUri.isBlank() || GAMBLER.photoUri == "empty")
-            || GAMBLER.stake == 0
+fun isProfileFilled(profile: GamblerModel): Boolean =
+    !(profile.nickname.isBlank()
+            || profile.name.isBlank()
+            || profile.family.isBlank()
+            || profile.gender.isBlank()
+            || (profile.photoUrl.isBlank() || profile.photoUrl == "empty")
+            || profile.stake == 0
             )
 
-fun ImageView.loadImage(uri: String) {
+fun ImageView.loadImage(url: String) {
     Picasso.get()
-        .load(uri)
+        .load(url)
         .fit()
         .placeholder(R.drawable.user)
         .into(this)

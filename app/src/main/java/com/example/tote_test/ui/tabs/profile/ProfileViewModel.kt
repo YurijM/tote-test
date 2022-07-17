@@ -53,6 +53,36 @@ class ProfileViewModel() : ViewModel() {
         }*/
     }
 
+    fun saveGamblerToDB(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
+        val profile: GamblerModel = _profile.value as GamblerModel
+
+        val dataMap = mutableMapOf<String, Any>()
+
+        dataMap[GAMBLER_NICKNAME] = profile.nickname.trim()
+        dataMap[GAMBLER_FAMILY] = profile.family.trim()
+        dataMap[GAMBLER_NAME] = profile.name.trim()
+        dataMap[GAMBLER_GENDER] = profile.gender
+
+        REPOSITORY.saveGamblerToDB(dataMap) {
+            onSuccess()
+        }
+    }
+
+    fun saveImageToStorage(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
+        val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_PHOTO).child(CURRENT_ID)
+
+        _photoUri.value?.let { it ->
+            REPOSITORY.saveImageToStorage(it, path) {
+                REPOSITORY.getUrlFromStorage(path) {url ->
+                    REPOSITORY.savePhotoUrlToDB(url) {
+                        onSuccess()
+                    }
+                }
+
+            }
+        }
+    }
+
     fun hideProgress() {
         _inProgress.value = false
     }

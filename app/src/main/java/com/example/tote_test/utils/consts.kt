@@ -19,6 +19,8 @@ lateinit var AUTH: FirebaseAuth
 lateinit var REF_DB_ROOT: DatabaseReference
 lateinit var REF_STORAGE_ROOT: StorageReference
 
+const val FOLDER_PROFILE_PHOTO = "profile_photo"
+
 const val CHILD_ID = "id"
 
 const val NODE_GAMBLERS = "gamblers"
@@ -35,7 +37,7 @@ const val GAMBLER_EMAIL = "email"
 const val GAMBLER_FAMILY = "family"
 const val GAMBLER_NAME = "name"
 const val GAMBLER_GENDER = "gender"
-const val GAMBLER_PHOTO_URI = "photoUri"
+const val GAMBLER_PHOTO_URL = "photoUrl"
 const val GAMBLER_STAKE = "stake"
 const val GAMBLER_POINTS = "points"
 const val GAMBLER_PREV_PLACE = "placePrev"
