@@ -40,7 +40,7 @@ class ProfileViewModel() : ViewModel() {
         _profile.value?.gender = gender
     }
 
-    fun changePhotoUri(uri: Uri) {
+    fun changePhotoUrl(uri: Uri) {
         _photoUri.value = uri
     }
 
@@ -63,8 +63,10 @@ class ProfileViewModel() : ViewModel() {
         dataMap[GAMBLER_NAME] = profile.name.trim()
         dataMap[GAMBLER_GENDER] = profile.gender
 
-        REPOSITORY.saveGamblerToDB(dataMap) {
-            onSuccess()
+        viewModelScope.launch(Dispatchers.Main) {
+            REPOSITORY.saveGamblerToDB(dataMap) {
+                onSuccess()
+            }
         }
     }
 
@@ -73,12 +75,11 @@ class ProfileViewModel() : ViewModel() {
 
         _photoUri.value?.let { it ->
             REPOSITORY.saveImageToStorage(it, path) {
-                REPOSITORY.getUrlFromStorage(path) {url ->
+                REPOSITORY.getUrlFromStorage(path) { url ->
                     REPOSITORY.savePhotoUrlToDB(url) {
                         onSuccess()
                     }
                 }
-
             }
         }
     }

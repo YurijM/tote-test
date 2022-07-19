@@ -61,9 +61,12 @@ class ProfileFragment : Fragment() {
 
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
-                result.data?.data?.path?.let { loadProfilePhoto(it) }
+                result.data?.data?.let {
+                    it.path?.let { path -> loadProfilePhoto(path) }
+                    viewModel.changePhotoUrl(it)
+                }
 
-                result.data?.data?.let { viewModel.changePhotoUri(it) }
+                //result.data?.data?.let { viewModel.changePhotoUri(it) }
             }
         }
 
@@ -76,7 +79,7 @@ class ProfileFragment : Fragment() {
         initFieldFamily()
         initFieldName()
         initFieldGender()
-        initFieldPhotoUri()
+        //initFieldPhotoUri()
     }
 
     private fun initFieldStake() {
@@ -168,6 +171,8 @@ class ProfileFragment : Fragment() {
             .into(binding.profilePhoto)
 
         binding.profilePhoto.tag = photoUrl
+
+        initFieldPhotoUri()
     }
 
     private fun isFieldsFilled(): Boolean =
@@ -195,14 +200,22 @@ class ProfileFragment : Fragment() {
             }
         )
 
-        if (binding.profilePhoto.tag != resources.getString(R.string.no_photo)) loadProfilePhoto(it.photoUrl)
+        /*toLog("tag: ${binding.profilePhoto.tag}")
+        if (binding.profilePhoto.tag != resources.getString(R.string.no_photo)) {
+            loadProfilePhoto(it.photoUrl)
+        }*/
+
+        if (it.photoUrl.isNotBlank() || it.photoUrl != EMPTY ) {
+            loadProfilePhoto(it.photoUrl)
+        }
 
         viewModel.hideProgress()
     }
 
     private fun observePhotoUri() = viewModel.photoUri.observe(viewLifecycleOwner) {
-        binding.profilePhoto.setImageURI(it)
-        binding.profilePhoto.tag = it.path
+        //binding.profilePhoto.setImageURI(it)
+        //binding.profilePhoto.tag = it.toString()
+        loadProfilePhoto(it.toString())
 
         initFieldPhotoUri()
     }
