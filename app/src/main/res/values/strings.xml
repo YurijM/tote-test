@@ -33,6 +33,6 @@
     <string name="man">м</string>
     <string name="woman">ж</string>
     <string name="load_photo">Загрузить фото</string>
-    <string name="no_photo">фото отсутствует</string>
+    <string name="empty">empty</string>
 
 </resources>

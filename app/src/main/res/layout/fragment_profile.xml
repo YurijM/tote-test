@@ -168,7 +168,7 @@
                 android:contentDescription="@string/app_name"
                 android:gravity="top"
                 android:layout_gravity="center"
-                android:tag="@string/no_photo"
+                android:tag="@string/empty"
                 android:src="@drawable/user" />
 
             <TextView

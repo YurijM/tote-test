@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        APP_ACTIVITY = this
+
         toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -58,8 +60,6 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         AppPreferences.getPreferences(this)
-
-        APP_ACTIVITY = this
 
         setSupportActionBar(binding.toolbar)
 
@@ -79,12 +79,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)
 
         setCopyright()
-
-        // Write a message to the database
-        /*val database = Firebase.database
-        val myRef = database.getReference("message")
-
-        myRef.setValue("Hello, World!")*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

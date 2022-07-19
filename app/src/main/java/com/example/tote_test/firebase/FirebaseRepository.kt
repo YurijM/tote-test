@@ -12,15 +12,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
-class AppValueEventListener (val onSuccess: (DataSnapshot) -> Unit): ValueEventListener {
+/*class AppValueEventListener (val onSuccess: (DataSnapshot) -> Unit): ValueEventListener {
     override fun onDataChange(snapshot: DataSnapshot) {
         onSuccess(snapshot)
     }
 
     override fun onCancelled(error: DatabaseError) {
     }
-
-}
+}*/
 
 class FirebaseRepository {
     init {
