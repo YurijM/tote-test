@@ -54,6 +54,8 @@ class ProfileViewModel() : ViewModel() {
     }
 
     fun saveGamblerToDB(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
+        showProgress()
+
         val profile: GamblerModel = _profile.value as GamblerModel
 
         val dataMap = mutableMapOf<String, Any>()
@@ -70,14 +72,16 @@ class ProfileViewModel() : ViewModel() {
         }
     }
 
-    fun saveImageToStorage(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
+    fun saveImageToStorage(onSuccess: (url: String) -> Unit) = viewModelScope.launch(Dispatchers.Main) {
+        showProgress()
+
         val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_PHOTO).child(CURRENT_ID)
 
         _photoUri.value?.let { it ->
             REPOSITORY.saveImageToStorage(it, path) {
                 REPOSITORY.getUrlFromStorage(path) { url ->
                     REPOSITORY.savePhotoUrlToDB(url) {
-                        onSuccess()
+                        onSuccess(url)
                     }
                 }
             }

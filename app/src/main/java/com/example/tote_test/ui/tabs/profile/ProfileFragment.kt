@@ -38,7 +38,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
+        //toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
 
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
         //viewModel.getGamblerLiveData()
@@ -62,7 +62,6 @@ class ProfileFragment : Fragment() {
         launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.data?.let {
-                    toLog("loadProfilePhoto - launcher")
                     it.path?.let { path -> loadProfilePhoto(path) }
                     viewModel.changePhotoUrl(it)
                 }
@@ -72,6 +71,13 @@ class ProfileFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun getImage() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        launcher.launch(intent)
     }
 
     private fun initFields() {
@@ -100,7 +106,8 @@ class ProfileFragment : Fragment() {
             if (it != null) {
                 viewModel.changeNickname(it.toString())
 
-                isNicknameFilled = !checkFieldBlank(it.toString(), binding.profileLayoutNickname, getString(R.string.nickname))
+                isNicknameFilled =
+                    !checkFieldBlank(it.toString(), binding.profileLayoutNickname, getString(R.string.nickname))
 
                 binding.profileSave.isEnabled = isFieldsFilled()
             }
@@ -154,7 +161,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initFieldPhotoUri() {
-        toLog("binding.profilePhoto.tag: ${binding.profilePhoto.tag}")
         isPhotoUriFilled = binding.profilePhoto.tag != EMPTY
 
         binding.profileErrorPhoto.visibility = if (isPhotoUriFilled) View.GONE else View.VISIBLE
@@ -163,7 +169,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun loadProfilePhoto(photoUrl: String) {
-        toLog("photoUrl: $photoUrl")
         val size = resources.getDimensionPixelSize(R.dimen.profile_size_photo)
         Picasso.get()
             .load(photoUrl)
@@ -184,8 +189,6 @@ class ProfileFragment : Fragment() {
                 && isPhotoUriFilled
 
     private fun observeProfile() = viewModel.profile.observe(viewLifecycleOwner) {
-        toLog("observeProfile: $it")
-
         binding.profileEmail.text = it.email
         binding.profileStake.text = getString(R.string.stake, it.stake)
         binding.profilePoints.text = getString(R.string.points, it.points)
@@ -201,26 +204,18 @@ class ProfileFragment : Fragment() {
             }
         )
 
-        /*toLog("tag: ${binding.profilePhoto.tag}")
-        if (binding.profilePhoto.tag != resources.getString(R.string.no_photo)) {
+        if (binding.profilePhoto.tag != EMPTY) {
+            loadProfilePhoto(binding.profilePhoto.tag.toString())
+        } else if ( it.photoUrl != EMPTY) {
             loadProfilePhoto(it.photoUrl)
-        }*/
-
-        toLog("loadProfilePhoto - observeProfile")
-        toLog("${it.photoUrl} <=> ${binding.profilePhoto.tag}")
-        if (it.photoUrl.isNotBlank() && it.photoUrl != binding.profilePhoto.tag ) {
-            loadProfilePhoto(it.photoUrl)
-        } else {
-            initFieldPhotoUri()
         }
+
+        initFieldPhotoUri()
 
         viewModel.hideProgress()
     }
 
     private fun observePhotoUri() = viewModel.photoUri.observe(viewLifecycleOwner) {
-        //binding.profilePhoto.setImageURI(it)
-        //binding.profilePhoto.tag = it.toString()
-        toLog("loadProfilePhoto - observePhotoUri")
         loadProfilePhoto(it.toString())
 
         initFieldPhotoUri()
@@ -236,18 +231,15 @@ class ProfileFragment : Fragment() {
         binding.profileSave.isEnabled = (!it && isFieldsFilled())
     }
 
-    private fun getImage() {
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
-        launcher.launch(intent)
-    }
-
     private fun saveProfilePhoto() {
         val tag = binding.profilePhoto.tag.toString()
         if (tag.isNotBlank() && tag != EMPTY) {
             viewModel.saveImageToStorage() {
-                showToast("Фото сохранено")
+                binding.profilePhoto.tag = it
+
+                viewModel.hideProgress()
+
+                showToast("Сохранено")
             }
         }
     }
@@ -260,7 +252,8 @@ class ProfileFragment : Fragment() {
         ) {
             viewModel.saveGamblerToDB {
                 saveProfilePhoto()
-                showToast("OK")
+
+                viewModel.hideProgress()
             }
         }
     }
