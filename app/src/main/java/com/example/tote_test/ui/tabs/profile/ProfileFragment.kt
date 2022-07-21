@@ -237,10 +237,18 @@ class ProfileFragment : Fragment() {
             viewModel.saveImageToStorage() {
                 binding.profilePhoto.tag = it
 
+                showToast("Сохранено")
+
                 viewModel.hideProgress()
 
-                showToast("Сохранено")
+                toGamblers()
             }
+        }
+    }
+
+    private fun toGamblers() {
+        if (viewModel.checkProfileFilled()) {
+            findTopNavController().navigate(R.id.action_profileFragment_to_tabsFragment)
         }
     }
 

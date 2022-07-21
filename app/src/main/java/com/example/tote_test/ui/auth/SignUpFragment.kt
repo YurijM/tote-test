@@ -1,7 +1,6 @@
 package com.example.tote_test.ui.auth
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tote_test.R
 import com.example.tote_test.databinding.FragmentSignUpBinding
 import com.example.tote_test.utils.*
-import com.google.android.material.textfield.TextInputLayout
 
 class SignUpFragment : Fragment() {
     private lateinit var binding: FragmentSignUpBinding
@@ -21,7 +19,7 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
+        //toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
 
         /*APP_ACTIVITY.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         APP_ACTIVITY.supportActionBar?.setDisplayShowHomeEnabled(true)*/
@@ -77,43 +75,6 @@ class SignUpFragment : Fragment() {
 
         return binding.root
     }
-
-    /*private fun checkFieldBlank(
-        input: String,
-        layout: TextInputLayout,
-        fieldName: String
-    ): Boolean {
-        var result = true
-
-        if (input.isBlank()) {
-            layout.isErrorEnabled = true
-            layout.error = getString(R.string.error_field_empty, fieldName)
-        } else {
-            layout.isErrorEnabled = false
-            result = false
-        }
-
-        return result
-    }*/
-
-    /*private fun checkMinLength(
-        minValue: Int,
-        input: Editable,
-        layout: TextInputLayout,
-        fieldName: String
-    ): Boolean {
-        var result = false
-
-        if (input.length < minValue) {
-            layout.isErrorEnabled = true
-            layout.error = getString(R.string.error_min_length, fieldName, minValue)
-        } else {
-            layout.isErrorEnabled = false
-            result = true
-        }
-
-        return result
-    }*/
 
     private fun comparePassword(password: String, confirmPassword: String): Boolean {
         var result = false

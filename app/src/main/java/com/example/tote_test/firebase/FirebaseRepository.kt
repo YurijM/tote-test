@@ -55,7 +55,7 @@ class FirebaseRepository {
     }
 
 
-    fun signIn(onSuccess: () -> Unit) {
+    fun signIn(onSuccess: () -> Unit, onFail: (String) -> Unit) {
         if (AppPreferences.getIsAuth()) {
             onSuccess()
         } else {
@@ -65,7 +65,7 @@ class FirebaseRepository {
                     onSuccess()
                 }
                 .addOnFailureListener {
-                    fixError(it.message.toString())
+                    onFail(it.message.toString())
                 }
         }
     }

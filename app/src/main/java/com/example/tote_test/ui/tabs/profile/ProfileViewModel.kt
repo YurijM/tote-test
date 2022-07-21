@@ -44,6 +44,14 @@ class ProfileViewModel() : ViewModel() {
         _photoUri.value = uri
     }
 
+    fun checkProfileFilled(): Boolean {
+        return if (_profile.value != null) {
+            isProfileFilled(_profile.value!!)
+        } else  {
+            false
+        }
+    }
+
     private fun getGamblerLiveData() = viewModelScope.launch(Dispatchers.Main) {
         showProgress()
         REPOSITORY.getGamblerLiveData(_profile)
