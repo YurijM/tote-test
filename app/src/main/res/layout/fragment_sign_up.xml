@@ -16,7 +16,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/signUpInputEmail"
-            style="@style/LayoutTextInput"
+            style="@style/TextInput"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -29,7 +29,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/signUpInputPassword"
-            style="@style/LayoutTextInput"
+            style="@style/TextInput"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -42,7 +42,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/signUpInputPasswordConfirm"
-            style="@style/LayoutTextInput"
+            style="@style/TextInput"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>

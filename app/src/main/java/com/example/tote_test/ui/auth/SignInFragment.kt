@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tote_test.R
 import com.example.tote_test.databinding.FragmentSignInBinding
-import com.example.tote_test.ui.tabs.profile.ProfileViewModel
 import com.example.tote_test.utils.*
 
 class SignInFragment : Fragment() {
@@ -30,6 +29,8 @@ class SignInFragment : Fragment() {
         binding = FragmentSignInBinding.inflate(layoutInflater, container, false)
 
         initFields()
+
+        binding.signInToAuth.isEnabled = isFieldsFilled()
 
         binding.signInToAuth.setOnClickListener {
             login()
@@ -64,9 +65,7 @@ class SignInFragment : Fragment() {
         }
     }
 
-    private fun isFieldsFilled(): Boolean {
-        return isEmailFilled && isPasswordFilled
-    }
+    private fun isFieldsFilled(): Boolean = isEmailFilled && isPasswordFilled
 
     private fun login() {
         EMAIL = binding.signInInputEmail.text.toString().trim()

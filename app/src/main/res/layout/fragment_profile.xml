@@ -61,9 +61,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/profileLayoutNickname"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/LayoutTextInput"
                 android:hint="@string/nickname">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -74,9 +72,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/profileLayoutFamily"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/LayoutTextInput"
                 android:hint="@string/family">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -87,9 +83,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/profileLayoutName"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/LayoutTextInput"
                 android:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
