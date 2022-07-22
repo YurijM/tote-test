@@ -80,6 +80,8 @@ class FirebaseRepository {
         REF_STORAGE_ROOT = FirebaseStorage.getInstance().reference
 
         CURRENT_ID = AUTH.currentUser?.uid.toString()
+
+        getGambler()
     }
 
     inline fun getUrlFromStorage(path: StorageReference, crossinline onSuccess: (url: String) -> Unit) {

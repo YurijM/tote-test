@@ -17,8 +17,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:maxHeight="?attr/actionBarSize"
-            app:titleTextColor="@color/white"
-            app:popupTheme="@style/Theme.Totetest.PopupOverlay" />
+            app:popupTheme="@style/Theme.Totetest.PopupOverlay"
+            app:titleTextColor="@color/white">
+
+            <ImageView
+                android:id="@+id/gamblerPhoto"
+                android:tag="@string/empty"
+                android:contentDescription="@string/app_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_marginEnd="@dimen/margin_xl"
+                android:src="@drawable/user_white" />
+
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,7 +42,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
-        <include android:id="@+id/mainFooter" layout="@layout/footer_main" />
+        <include
+            android:id="@+id/mainFooter"
+            layout="@layout/footer_main" />
 
     </LinearLayout>
 

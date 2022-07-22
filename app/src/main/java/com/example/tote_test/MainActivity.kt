@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.constraintlayout.motion.widget.Key.VISIBILITY
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import com.example.tote_test.databinding.ActivityMainBinding
 import com.example.tote_test.firebase.FirebaseRepository
 import com.example.tote_test.ui.tabs.TabsFragment
 import com.example.tote_test.utils.*
+import com.squareup.picasso.Picasso
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -63,6 +65,8 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
+        observeGambler()
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         delegate.applyDayNight()
 
@@ -79,6 +83,28 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)
 
         setCopyright()
+    }
+
+    private fun observeGambler() = viewModel.profile.observe(this) {
+        val gamblerPhoto = binding.gamblerPhoto
+
+        if (it.photoUrl == EMPTY) {
+            gamblerPhoto.visibility = View.GONE
+        } else {
+            if (it.photoUrl != gamblerPhoto.tag.toString()) {
+                val size = resources.getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size)
+
+                Picasso.get()
+                    .load(it.photoUrl)
+                    .resize(size, size)
+                    .centerCrop()
+                    .into(gamblerPhoto)
+
+                gamblerPhoto.tag = it.photoUrl
+            }
+
+            gamblerPhoto.visibility = View.VISIBLE
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
