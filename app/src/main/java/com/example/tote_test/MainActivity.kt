@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             gamblerPhoto.visibility = View.GONE
         } else {
             if (it.photoUrl != gamblerPhoto.tag.toString()) {
-                val size = resources.getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size)
+                val size = resources.getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size) * 3
 
                 Picasso.get()
                     .load(it.photoUrl)
