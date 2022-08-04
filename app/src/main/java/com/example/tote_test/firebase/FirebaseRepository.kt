@@ -55,7 +55,7 @@ class FirebaseRepository {
     }
 
 
-    fun signIn(onSuccess: () -> Unit, onFail: (String) -> Unit) {
+     fun signIn(onSuccess: () -> Unit) {
         if (AppPreferences.getIsAuth()) {
             onSuccess()
         } else {
@@ -65,7 +65,7 @@ class FirebaseRepository {
                     onSuccess()
                 }
                 .addOnFailureListener {
-                    onFail(it.message.toString())
+                    fixError(it.message.toString())
                 }
         }
     }
@@ -81,7 +81,7 @@ class FirebaseRepository {
 
         CURRENT_ID = AUTH.currentUser?.uid.toString()
 
-        getGambler()
+        //getGambler()
     }
 
     inline fun getUrlFromStorage(path: StorageReference, crossinline onSuccess: (url: String) -> Unit) {
