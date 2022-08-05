@@ -90,9 +90,7 @@ class FirebaseRepository {
             .addOnFailureListener { showToast(it.message.toString()) }
     }
 
-    inline fun saveImageToStorage(uri: Uri, path: StorageReference, crossinline onSuccess: () -> Unit) {
-        toLog("uri: $uri")
-        toLog("path: $path")
+    suspend fun saveImageToStorage(uri: Uri, path: StorageReference, onSuccess: () -> Unit) {
         path.putFile(uri)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { showToast(it.message.toString()) }
@@ -126,7 +124,7 @@ class FirebaseRepository {
         })
     }
 
-    fun saveGamblerToDB(dataMap: MutableMap<String, Any>, onSuccess: () -> Unit) {
+    suspend fun saveGamblerToDB(dataMap: MutableMap<String, Any>, onSuccess: () -> Unit) {
         REF_DB_ROOT.child(NODE_GAMBLERS).child(CURRENT_ID).updateChildren(dataMap)
             .addOnCompleteListener {
                 GAMBLER.nickname = dataMap[GAMBLER_NICKNAME].toString()
@@ -144,7 +142,7 @@ class FirebaseRepository {
             }
     }
 
-    inline fun savePhotoUrlToDB(url: String, crossinline onSuccess: () -> Unit) {
+    suspend fun savePhotoUrlToDB(url: String, onSuccess: () -> Unit) {
         REF_DB_ROOT
             .child(NODE_GAMBLERS)
             .child(CURRENT_ID)

@@ -10,7 +10,7 @@ import com.example.tote_test.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ProfileViewModel() : ViewModel() {
+class ProfileViewModel : ViewModel() {
     private val _inProgress = MutableLiveData(false)
     val inProgress: LiveData<Boolean> = _inProgress
 
@@ -47,22 +47,22 @@ class ProfileViewModel() : ViewModel() {
     fun checkProfileFilled(): Boolean {
         return if (_profile.value != null) {
             isProfileFilled(_profile.value!!)
-        } else  {
+        } else {
             false
         }
     }
 
-    private fun getGamblerLiveData() = viewModelScope.launch(Dispatchers.Main) {
-        showProgress()
+    private fun getGamblerLiveData() = viewModelScope.launch(Dispatchers.IO) {
+        //showProgress()
         REPOSITORY.getGamblerLiveData(_profile)
 
-        /*viewModelScope.launch(Dispatchers.Main) {
+        /*viewModelScope.launch(Dispatchers.IO) {
             hideProgress()
         }*/
     }
 
-    fun saveGamblerToDB(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.Main) {
-        showProgress()
+    fun saveGamblerToDB(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+        //showProgress()
 
         val profile: GamblerModel = _profile.value as GamblerModel
 
@@ -73,23 +73,23 @@ class ProfileViewModel() : ViewModel() {
         dataMap[GAMBLER_NAME] = profile.name.trim()
         dataMap[GAMBLER_GENDER] = profile.gender
 
-        viewModelScope.launch(Dispatchers.Main) {
-            REPOSITORY.saveGamblerToDB(dataMap) {
-                onSuccess()
-            }
+        REPOSITORY.saveGamblerToDB(dataMap) {
+            onSuccess()
         }
     }
 
-    fun saveImageToStorage(onSuccess: (url: String) -> Unit) = viewModelScope.launch(Dispatchers.Main) {
-        showProgress()
+    fun saveImageToStorage(onSuccess: (url: String) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+        //showProgress()
 
         val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_PHOTO).child(CURRENT_ID)
 
         _photoUri.value?.let { it ->
             REPOSITORY.saveImageToStorage(it, path) {
                 REPOSITORY.getUrlFromStorage(path) { url ->
-                    REPOSITORY.savePhotoUrlToDB(url) {
-                        onSuccess(url)
+                    viewModelScope.launch(Dispatchers.IO) {
+                        REPOSITORY.savePhotoUrlToDB(url) {
+                            onSuccess(url)
+                        }
                     }
                 }
             }
@@ -100,7 +100,7 @@ class ProfileViewModel() : ViewModel() {
         _inProgress.value = false
     }
 
-    private fun showProgress() {
+    fun showProgress() {
         _inProgress.value = true
     }
 }

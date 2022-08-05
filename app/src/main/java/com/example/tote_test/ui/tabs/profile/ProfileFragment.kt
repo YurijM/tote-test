@@ -2,6 +2,7 @@ package com.example.tote_test.ui.tabs.profile
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -169,6 +170,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun loadProfilePhoto(photoUrl: String) {
+        toLog("loadProfilePhoto -> photoUrl: $photoUrl")
         val size = resources.getDimensionPixelSize(R.dimen.profile_size_photo)
         Picasso.get()
             .load(photoUrl)
@@ -177,7 +179,6 @@ class ProfileFragment : Fragment() {
             .into(binding.profilePhoto)
 
         binding.profilePhoto.tag = photoUrl
-
         initFieldPhotoUri()
     }
 
@@ -204,6 +205,8 @@ class ProfileFragment : Fragment() {
             }
         )
 
+        toLog("observeProfile -> binding.profilePhoto.tag: ${binding.profilePhoto.tag}")
+        toLog("observeProfile -> profile.photoUrl: ${it.photoUrl}")
         if (binding.profilePhoto.tag != EMPTY) {
             loadProfilePhoto(binding.profilePhoto.tag.toString())
         } else if ( it.photoUrl != EMPTY) {
@@ -211,17 +214,17 @@ class ProfileFragment : Fragment() {
         }
 
         initFieldPhotoUri()
-
-        viewModel.hideProgress()
     }
 
     private fun observePhotoUri() = viewModel.photoUri.observe(viewLifecycleOwner) {
+        toLog("observePhotoUri -> path: $it")
         loadProfilePhoto(it.toString())
 
         initFieldPhotoUri()
     }
 
     private fun observeInProgress() = viewModel.inProgress.observe(viewLifecycleOwner) {
+        toLog("observeInProgress -> inProgress: $it")
         if (it) {
             binding.profileProgressBar.visibility = View.VISIBLE
         } else {
@@ -233,13 +236,14 @@ class ProfileFragment : Fragment() {
 
     private fun saveProfilePhoto() {
         val tag = binding.profilePhoto.tag.toString()
+
+        toLog("saveProfilePhoto -> photoUri: ${viewModel.photoUri.value}")
         if (tag.isNotBlank() && tag != EMPTY) {
             viewModel.saveImageToStorage() {
                 binding.profilePhoto.tag = it
 
+                toLog("saveProfilePhoto")
                 showToast("Сохранено")
-
-                viewModel.hideProgress()
 
                 toGamblers()
             }
@@ -258,11 +262,14 @@ class ProfileFragment : Fragment() {
             && isNameFilled
             && isGenderFilled
         ) {
-            viewModel.saveGamblerToDB {
-                saveProfilePhoto()
+            viewModel.showProgress()
 
-                viewModel.hideProgress()
+            viewModel.saveGamblerToDB {
+                toLog("saveProfile")
+                saveProfilePhoto()
             }
+
+            viewModel.hideProgress()
         }
     }
 }
