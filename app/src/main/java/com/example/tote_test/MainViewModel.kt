@@ -17,7 +17,7 @@ class MainViewModel() : ViewModel() {
         getGamblerLiveData()
     }
 
-    private fun getGamblerLiveData() = viewModelScope.launch(Dispatchers.Main) {
+    private fun getGamblerLiveData() = viewModelScope.launch(Dispatchers.IO) {
         REPOSITORY.getGamblerLiveData(_profile)
     }
 

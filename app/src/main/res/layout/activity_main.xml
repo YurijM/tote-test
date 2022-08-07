@@ -29,7 +29,8 @@
                 android:background="@drawable/round_outline"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/user_white"
-                android:tag="@string/empty" />
+                android:tag="@string/empty"
+                android:visibility="gone" />
 
         </androidx.appcompat.widget.Toolbar>
 

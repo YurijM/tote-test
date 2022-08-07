@@ -2,6 +2,7 @@ package com.example.tote_test.utils
 
 import android.text.Editable
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -79,6 +80,25 @@ fun ImageView.loadImage(url: String) {
         .fit()
         .placeholder(R.drawable.user)
         .into(this)
+}
+
+fun ImageView.loadImage(url: String, width: Int, height: Int) {
+    Picasso.get()
+        .load(url)
+        .resize(width, height)
+        .centerCrop()
+        .placeholder(R.drawable.user)
+        .into(this)
+}
+
+fun loadAppBarPhoto() {
+    toLog("loadAppBarPhoto")
+    val gamblerPhoto = APP_ACTIVITY.findViewById<ImageView>(R.id.gamblerPhoto)
+    val size = APP_ACTIVITY.resources
+        .getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size) * 3
+
+    gamblerPhoto.loadImage(GAMBLER.photoUrl, size, size)
+    gamblerPhoto.visibility = View.VISIBLE
 }
 
 fun Fragment.findTopNavController(): NavController {

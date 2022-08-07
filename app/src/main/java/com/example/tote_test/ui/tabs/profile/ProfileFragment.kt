@@ -209,7 +209,7 @@ class ProfileFragment : Fragment() {
         toLog("observeProfile -> profile.photoUrl: ${it.photoUrl}")
         if (binding.profilePhoto.tag != EMPTY) {
             loadProfilePhoto(binding.profilePhoto.tag.toString())
-        } else if ( it.photoUrl != EMPTY) {
+        } else if (it.photoUrl != EMPTY) {
             loadProfilePhoto(it.photoUrl)
         }
 
@@ -237,7 +237,8 @@ class ProfileFragment : Fragment() {
     private fun saveProfilePhoto() {
         val tag = binding.profilePhoto.tag.toString()
 
-        toLog("saveProfilePhoto -> photoUri: ${viewModel.photoUri.value}")
+        toLog("saveProfilePhoto -> tag: $tag")
+        toLog("saveProfilePhoto -> GAMBLER.photoUrl: ${GAMBLER.photoUrl}")
         if (tag.isNotBlank() && tag != EMPTY) {
             viewModel.saveImageToStorage() {
                 binding.profilePhoto.tag = it

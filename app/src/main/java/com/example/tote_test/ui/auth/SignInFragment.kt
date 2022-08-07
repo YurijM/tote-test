@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.example.tote_test.R
 import com.example.tote_test.databinding.FragmentSignInBinding
 import com.example.tote_test.utils.*
+import com.squareup.picasso.Picasso
 
 class SignInFragment : Fragment() {
     private lateinit var binding: FragmentSignInBinding
-    private lateinit var viewModel: SignInViewModel
+    private val viewModel: SignInViewModel by viewModels()
 
     private var isEmailFilled = false
     private var isPasswordFilled = false
@@ -24,7 +28,7 @@ class SignInFragment : Fragment() {
     ): View {
         //toLog("${javaClass.simpleName} - ${object{}.javaClass.enclosingMethod?.name}")
 
-        viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
+        //viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
 
         observeGambler()
 
@@ -89,6 +93,9 @@ class SignInFragment : Fragment() {
 
         if (GAMBLER.id.isNotBlank()) {
             AppPreferences.setIsAuth(true)
+
+            //loadAppBarPhoto()
+
             findTopNavController().navigate(R.id.action_signInFragment_to_tabsFragment)
         }
     }

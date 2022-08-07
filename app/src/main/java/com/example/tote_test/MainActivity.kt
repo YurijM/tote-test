@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.motion.widget.Key.VISIBILITY
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -19,12 +21,14 @@ import com.example.tote_test.firebase.FirebaseRepository
 import com.example.tote_test.ui.tabs.TabsFragment
 import com.example.tote_test.utils.*
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var navController: NavController? = null
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
 
     private var topLevelDestinations = setOf(
         getMainDestination(),
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
         initFirebase()
 
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        //viewModel = ViewModelProvider(this)[MainViewModel::class.java]
 
         AppPreferences.getPreferences(this)
 
@@ -82,17 +86,26 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager.registerFragmentLifecycleCallbacks(fragmentListener, true)
 
+        binding.gamblerPhoto.setOnClickListener {
+            navController.navigate(R.id.profileFragment)
+        }
+
         setCopyright()
     }
 
     private fun observeGambler() = viewModel.profile.observe(this) {
+        GAMBLER = it
+
+        toLog("observeGambler -> GAMBLER: $GAMBLER")
+        toLog("observeGambler -> it: $it")
+
         val gamblerPhoto = binding.gamblerPhoto
 
         if (it.photoUrl == EMPTY) {
             gamblerPhoto.visibility = View.GONE
         } else {
             if (it.photoUrl != gamblerPhoto.tag.toString()) {
-                val size = resources.getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size) * 3
+                /*val size = resources.getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size) * 3
 
                 Picasso.get()
                     .load(it.photoUrl)
@@ -100,10 +113,12 @@ class MainActivity : AppCompatActivity() {
                     .centerCrop()
                     .into(gamblerPhoto)
 
-                gamblerPhoto.tag = it.photoUrl
+                gamblerPhoto.tag = it.photoUrl*/
+
+                loadAppBarPhoto()
             }
 
-            gamblerPhoto.visibility = View.VISIBLE
+            //gamblerPhoto.visibility = View.VISIBLE
         }
     }
 
@@ -154,6 +169,12 @@ class MainActivity : AppCompatActivity() {
          navController.graph = graph*/
 
         if (AppPreferences.getIsAuth()) {
+            //viewModel.changeProfile()
+
+            toLog("prepareRootNavController -> GAMBLER: $GAMBLER")
+
+            if (GAMBLER.photoUrl != EMPTY) loadAppBarPhoto()
+
             graph.setStartDestination(
                 if (isProfileFilled(GAMBLER)) {
                     getTabsDestination()
