@@ -46,11 +46,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //ViewModel
-    implementation('androidx.fragment:fragment-ktx:1.5.0')
+    implementation('androidx.fragment:fragment-ktx:1.5.1')
 
     //Navigation
-    implementation('androidx.navigation:navigation-fragment-ktx:2.5.0')
-    implementation('androidx.navigation:navigation-ui-ktx:2.5.0')
+    implementation('androidx.navigation:navigation-fragment-ktx:2.5.1')
+    implementation('androidx.navigation:navigation-ui-ktx:2.5.1')
 
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:30.2.0')
@@ -60,5 +60,6 @@ dependencies {
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation('jp.wasabeef:picasso-transformations:2.4.0')
 
 }

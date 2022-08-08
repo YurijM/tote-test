@@ -90,7 +90,7 @@ class FirebaseRepository {
             .addOnFailureListener { showToast(it.message.toString()) }
     }
 
-    suspend fun saveImageToStorage(uri: Uri, path: StorageReference, onSuccess: () -> Unit) {
+    fun saveImageToStorage(uri: Uri, path: StorageReference, onSuccess: () -> Unit) {
         path.putFile(uri)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { showToast(it.message.toString()) }
@@ -103,7 +103,8 @@ class FirebaseRepository {
         REF_DB_ROOT.child(NODE_GAMBLERS).child(CURRENT_ID).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 GAMBLER = snapshot.getValue(GamblerModel::class.java) ?: GamblerModel()
-                liveData.postValue(GAMBLER)
+                //liveData.postValue(GAMBLER)
+                liveData.value = GAMBLER
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -124,7 +125,7 @@ class FirebaseRepository {
         })
     }
 
-    suspend fun saveGamblerToDB(dataMap: MutableMap<String, Any>, onSuccess: () -> Unit) {
+    fun saveGamblerToDB(dataMap: MutableMap<String, Any>, onSuccess: () -> Unit) {
         REF_DB_ROOT.child(NODE_GAMBLERS).child(CURRENT_ID).updateChildren(dataMap)
             .addOnCompleteListener {
                 GAMBLER.nickname = dataMap[GAMBLER_NICKNAME].toString()
@@ -142,7 +143,7 @@ class FirebaseRepository {
             }
     }
 
-    suspend fun savePhotoUrlToDB(url: String, onSuccess: () -> Unit) {
+    fun savePhotoUrlToDB(url: String, onSuccess: () -> Unit) {
         REF_DB_ROOT
             .child(NODE_GAMBLERS)
             .child(CURRENT_ID)

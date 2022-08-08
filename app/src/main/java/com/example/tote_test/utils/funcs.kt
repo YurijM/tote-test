@@ -1,12 +1,12 @@
 package com.example.tote_test.utils
 
+import android.annotation.SuppressLint
 import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -14,6 +14,7 @@ import com.example.tote_test.R
 import com.example.tote_test.models.GamblerModel
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
 fun showToast(message: String) {
     Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_LONG).show()
@@ -82,22 +83,25 @@ fun ImageView.loadImage(url: String) {
         .into(this)
 }
 
-fun ImageView.loadImage(url: String, width: Int, height: Int) {
+fun ImageView.loadImage(url: String, width: Int, height: Int, radius: Int = 0, margin: Int = 0) {
+    val transformation = RoundedCornersTransformation(radius, margin)
     Picasso.get()
         .load(url)
         .resize(width, height)
+        .transform(transformation)
         .centerCrop()
         .placeholder(R.drawable.user)
         .into(this)
 }
 
+@SuppressLint("PrivateResource")
 fun loadAppBarPhoto() {
     toLog("loadAppBarPhoto")
     val gamblerPhoto = APP_ACTIVITY.findViewById<ImageView>(R.id.gamblerPhoto)
     val size = APP_ACTIVITY.resources
         .getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size) * 3
 
-    gamblerPhoto.loadImage(GAMBLER.photoUrl, size, size)
+    gamblerPhoto.loadImage(GAMBLER.photoUrl, size, size, size/2)
     gamblerPhoto.visibility = View.VISIBLE
 }
 

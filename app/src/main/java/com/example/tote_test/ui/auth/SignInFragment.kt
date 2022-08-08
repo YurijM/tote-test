@@ -94,9 +94,14 @@ class SignInFragment : Fragment() {
         if (GAMBLER.id.isNotBlank()) {
             AppPreferences.setIsAuth(true)
 
+            if (isProfileFilled(GAMBLER)) {
+                findTopNavController().navigate(R.id.action_signInFragment_to_tabsFragment)
+            } else {
+                findTopNavController().navigate(R.id.action_signInFragment_to_profileFragment)
+            }
+        }
+
             //loadAppBarPhoto()
 
-            findTopNavController().navigate(R.id.action_signInFragment_to_tabsFragment)
-        }
     }
 }

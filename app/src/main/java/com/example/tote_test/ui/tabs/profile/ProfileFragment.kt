@@ -2,7 +2,6 @@ package com.example.tote_test.ui.tabs.profile
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tote_test.R
 import com.example.tote_test.databinding.FragmentProfileBinding
 import com.example.tote_test.utils.*
-import com.squareup.picasso.Picasso
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -170,15 +168,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun loadProfilePhoto(photoUrl: String) {
-        toLog("loadProfilePhoto -> photoUrl: $photoUrl")
         val size = resources.getDimensionPixelSize(R.dimen.profile_size_photo)
-        Picasso.get()
-            .load(photoUrl)
-            .resize(size, size)
-            .centerCrop()
-            .into(binding.profilePhoto)
+        val radius = resources.getDimensionPixelSize(R.dimen.profile_size_photo_radius)
+        binding.profilePhoto.loadImage(photoUrl, size, size, radius)
 
         binding.profilePhoto.tag = photoUrl
+
         initFieldPhotoUri()
     }
 
@@ -240,7 +235,7 @@ class ProfileFragment : Fragment() {
         toLog("saveProfilePhoto -> tag: $tag")
         toLog("saveProfilePhoto -> GAMBLER.photoUrl: ${GAMBLER.photoUrl}")
         if (tag.isNotBlank() && tag != EMPTY) {
-            viewModel.saveImageToStorage() {
+            viewModel.saveImageToStorage {
                 binding.profilePhoto.tag = it
 
                 toLog("saveProfilePhoto")
@@ -263,14 +258,14 @@ class ProfileFragment : Fragment() {
             && isNameFilled
             && isGenderFilled
         ) {
-            viewModel.showProgress()
+            //viewModel.showProgress()
 
             viewModel.saveGamblerToDB {
                 toLog("saveProfile")
                 saveProfilePhoto()
             }
 
-            viewModel.hideProgress()
+            //viewModel.hideProgress()
         }
     }
 }
