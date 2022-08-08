@@ -39,12 +39,6 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="com.example.tote_test.ui.auth.SignUpFragment"
-        android:label="@string/registration"
-        tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signInFragment_to_profileFragment"
             app:destination="@id/profileFragment"
@@ -54,6 +48,12 @@
             app:popExitAnim="@android:anim/slide_out_right"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.example.tote_test.ui.auth.SignUpFragment"
+        android:label="@string/registration"
+        tools:layout="@layout/fragment_sign_up" >
         <action
             android:id="@+id/action_signUpFragment_to_profileFragment"
             app:destination="@id/profileFragment"

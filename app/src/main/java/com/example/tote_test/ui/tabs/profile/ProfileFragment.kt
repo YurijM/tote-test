@@ -241,10 +241,41 @@ class ProfileFragment : Fragment() {
                 toLog("saveProfilePhoto")
                 showToast("Сохранено")
 
-                toGamblers()
+                //toGamblers()
             }
         }
     }
+
+    /*private fun saveProfilePhoto() {
+        val tag = binding.profilePhoto.tag.toString()
+
+        toLog("saveProfilePhoto -> tag: $tag")
+        toLog("saveProfilePhoto -> GAMBLER.photoUrl: ${GAMBLER.photoUrl}")
+        if (tag.isNotBlank() && tag != EMPTY) {
+            viewModel.saveImageToStorage(
+                {
+                    viewModel.getUrlFromStorage
+                    {
+                        viewModel.savePhotoUrlToDB(
+                            it,
+                            {
+                                binding.profilePhoto.tag = it
+
+                                viewModel.hideProgress()
+
+                                toLog("saveProfilePhoto")
+                                showToast("Сохранено")
+                            }
+                    },
+                    {}
+                    )
+                },
+                {
+                    toLog("saveProfilePhoto -> saveImageToStorage -> fail: $it")
+                }
+            )
+        }
+    }*/
 
     private fun toGamblers() {
         if (viewModel.checkProfileFilled()) {

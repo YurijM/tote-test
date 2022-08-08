@@ -54,8 +54,7 @@ class FirebaseRepository {
             }
     }
 
-
-     fun signIn(onSuccess: () -> Unit) {
+    fun signIn(onSuccess: () -> Unit) {
         if (AppPreferences.getIsAuth()) {
             onSuccess()
         } else {
@@ -84,16 +83,18 @@ class FirebaseRepository {
         //getGambler()
     }
 
-    inline fun getUrlFromStorage(path: StorageReference, crossinline onSuccess: (url: String) -> Unit) {
+    fun getUrlFromStorage(path: StorageReference, onSuccess: (url: String) -> Unit) {
         path.downloadUrl
             .addOnSuccessListener { onSuccess(it.toString()) }
             .addOnFailureListener { showToast(it.message.toString()) }
+            //.addOnFailureListener { onFail(it.message.toString()) }
     }
 
     fun saveImageToStorage(uri: Uri, path: StorageReference, onSuccess: () -> Unit) {
         path.putFile(uri)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { showToast(it.message.toString()) }
+            //.addOnFailureListener { onFail(it.message.toString()) }
     }
 
     /*
@@ -140,6 +141,7 @@ class FirebaseRepository {
             }
             .addOnFailureListener {
                 showToast(it.message.toString())
+                //onFail(it.message.toString())
             }
     }
 
@@ -151,9 +153,10 @@ class FirebaseRepository {
             .setValue(url)
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { showToast(it.message.toString()) }
+            //.addOnFailureListener { onFail(it.message.toString()) }
     }
 
-    inline fun saveStakeToDB(stake: Int, crossinline onSuccess: () -> Unit) {
+    fun saveStakeToDB(stake: Int, onSuccess: () -> Unit) {
         REF_DB_ROOT
             .child(NODE_GAMBLERS)
             .child(CURRENT_ID)

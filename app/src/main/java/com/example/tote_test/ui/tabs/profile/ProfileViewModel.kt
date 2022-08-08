@@ -62,7 +62,10 @@ class ProfileViewModel : ViewModel() {
     }
 
     fun saveGamblerToDB(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
-        showProgress()
+        viewModelScope.launch {
+            toLog("saveGamblerToDB -> showProgress")
+            showProgress()
+        }
 
         val profile: GamblerModel = _profile.value as GamblerModel
 
@@ -74,25 +77,126 @@ class ProfileViewModel : ViewModel() {
         dataMap[GAMBLER_GENDER] = profile.gender
 
         REPOSITORY.saveGamblerToDB(dataMap) {
-           hideProgress()
+            viewModelScope.launch {
+                toLog("saveGamblerToDB -> hideProgress")
+                hideProgress()
+            }
 
             onSuccess()
         }
     }
 
+    /*fun saveImageToStorage(onSuccess: () -> Unit, onFail: (String) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+        toLog("_photoUri.value: ${_photoUri.value}")
+
+        if (_photoUri.value == null) {
+           return@launch
+        }
+
+        viewModelScope.launch {
+            toLog("saveImageToStorage -> showProgress")
+            showProgress()
+        }
+        val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_PHOTO).child(CURRENT_ID)
+
+        _photoUri.value?.let {
+            REPOSITORY.saveImageToStorage(it, path,
+                {
+                    viewModelScope.launch {
+                        toLog("saveImageToStorage -> hideProgress")
+                        hideProgress()
+                    }
+                    onSuccess()
+                },
+                { error ->
+                    viewModelScope.launch {
+                        toLog("saveImageToStorage -> fail: $error")
+                        hideProgress()
+                    }
+                    onFail(error)
+                }
+            )
+        }
+    }*/
+
+    /*fun getUrlFromStorage(onSuccess: (String) -> Unit, onFail: (String) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+        val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_PHOTO).child(CURRENT_ID)
+
+        viewModelScope.launch {
+            toLog("getUrlFromStorage -> showProgress")
+            showProgress()
+        }
+
+        REPOSITORY.getUrlFromStorage(path,
+            {
+                viewModelScope.launch {
+                    toLog("getUrlFromStorage -> hideProgress")
+                    hideProgress()
+                }
+                onSuccess(it)
+            },
+            { error ->
+                viewModelScope.launch {
+                    toLog("getUrlFromStorage -> fail: $error")
+                    hideProgress()
+                }
+                onFail(error)
+            }
+        )
+    }*/
+
+    /*fun savePhotoUrlToDB(url: String, onSuccess: () -> Unit, onFail: (String) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
+            toLog("savePhotoUrlToDB -> showProgress")
+            showProgress()
+        }
+
+        REPOSITORY.savePhotoUrlToDB(url,
+            {
+                viewModelScope.launch {
+                    toLog("savePhotoUrlToDB -> hideProgress")
+                    hideProgress()
+                }
+                onSuccess()
+            },
+            { error ->
+                viewModelScope.launch {
+                    toLog("savePhotoUrlToDB -> fail: $error")
+                    hideProgress()
+                }
+            }
+        )
+    }*/
+
+
     fun saveImageToStorage(onSuccess: (url: String) -> Unit) = viewModelScope.launch(Dispatchers.IO) {
-        showProgress()
+        toLog("_photoUri.value: ${_photoUri.value}")
+
+        if (_photoUri.value == null) {
+            return@launch
+        }
+
+        viewModelScope.launch {
+            toLog("saveImageToStorage -> showProgress")
+            showProgress()
+        }
 
         val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_PHOTO).child(CURRENT_ID)
 
         _photoUri.value?.let { it ->
-            REPOSITORY.saveImageToStorage(it, path) {
-                REPOSITORY.getUrlFromStorage(path) { url ->
+            viewModelScope.launch(Dispatchers.IO) {
+                REPOSITORY.saveImageToStorage(it, path) {
                     viewModelScope.launch(Dispatchers.IO) {
-                        REPOSITORY.savePhotoUrlToDB(url) {
-                            hideProgress()
-
-                            onSuccess(url)
+                        REPOSITORY.getUrlFromStorage(path) { url ->
+                            viewModelScope.launch(Dispatchers.IO) {
+                                REPOSITORY.savePhotoUrlToDB(url) {
+                                    viewModelScope.launch {
+                                        toLog("saveImageToStorage -> hideProgress")
+                                        hideProgress()
+                                    }
+                                    onSuccess(url)
+                                }
+                            }
                         }
                     }
                 }
@@ -100,11 +204,11 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    private fun hideProgress() {
-        _inProgress.postValue(false)
-    }
-
     private fun showProgress() {
         _inProgress.postValue(true)
+    }
+
+    private fun hideProgress() {
+        _inProgress.postValue(false)
     }
 }
