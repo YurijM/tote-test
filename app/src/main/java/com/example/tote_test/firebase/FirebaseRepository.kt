@@ -12,18 +12,26 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
-/*class AppValueEventListener (val onSuccess: (DataSnapshot) -> Unit): ValueEventListener {
+class AppValueEventListener (val onSuccess: (DataSnapshot) -> Unit): ValueEventListener {
     override fun onDataChange(snapshot: DataSnapshot) {
         onSuccess(snapshot)
     }
 
     override fun onCancelled(error: DatabaseError) {
     }
-}*/
+}
 
 class FirebaseRepository {
     init {
         AUTH = FirebaseAuth.getInstance()
+    }
+
+   fun initGambler( onSuccess: () -> Unit) {
+        REF_DB_ROOT.child(NODE_GAMBLERS).child(CURRENT_ID)
+            .addListenerForSingleValueEvent(AppValueEventListener {
+                GAMBLER = it.getValue(GamblerModel::class.java) ?: GamblerModel()
+                onSuccess()
+            })
     }
 
     fun signup(onSuccess: () -> Unit, onFail: (String) -> Unit) {
@@ -115,7 +123,7 @@ class FirebaseRepository {
     }
 
     fun getGambler() {
-        REF_DB_ROOT.child(NODE_GAMBLERS).child(CURRENT_ID).addValueEventListener(object : ValueEventListener {
+        /*REF_DB_ROOT.child(NODE_GAMBLERS).child(CURRENT_ID).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 GAMBLER = snapshot.getValue(GamblerModel::class.java) ?: GamblerModel()
             }
@@ -123,7 +131,7 @@ class FirebaseRepository {
             override fun onCancelled(error: DatabaseError) {
                 fixError("FirebaseRepository-getGambler-onCancelled: ${error.message}")
             }
-        })
+        })*/
     }
 
     fun saveGamblerToDB(dataMap: MutableMap<String, Any>, onSuccess: () -> Unit) {

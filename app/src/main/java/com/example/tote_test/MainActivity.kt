@@ -7,11 +7,8 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.constraintlayout.motion.widget.Key.VISIBILITY
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -20,9 +17,6 @@ import com.example.tote_test.databinding.ActivityMainBinding
 import com.example.tote_test.firebase.FirebaseRepository
 import com.example.tote_test.ui.tabs.TabsFragment
 import com.example.tote_test.utils.*
-import com.squareup.picasso.Picasso
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -96,27 +90,15 @@ class MainActivity : AppCompatActivity() {
     private fun observeGambler() = viewModel.profile.observe(this) {
         GAMBLER = it
 
-        toLog("observeGambler -> GAMBLER: $GAMBLER")
-        toLog("observeGambler -> it: $it")
+        toLog("MainActivity -> observeGambler -> GAMBLER: $GAMBLER")
+        toLog("MainActivity -> observeGambler -> it: $it")
 
         val gamblerPhoto = binding.gamblerPhoto
 
         if (it.photoUrl == EMPTY) {
             gamblerPhoto.visibility = View.GONE
-        } else {
-            if (it.photoUrl != gamblerPhoto.tag.toString()) {
-                /*val size = resources.getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size) * 3
-
-                Picasso.get()
-                    .load(it.photoUrl)
-                    .resize(size, size)
-                    .centerCrop()
-                    .into(gamblerPhoto)
-
-                gamblerPhoto.tag = it.photoUrl*/
-
-                loadAppBarPhoto()
-            }
+        } else if (it.photoUrl != gamblerPhoto.tag.toString()) {
+            loadAppBarPhoto()
 
             //gamblerPhoto.visibility = View.VISIBLE
         }
@@ -169,11 +151,13 @@ class MainActivity : AppCompatActivity() {
          navController.graph = graph*/
 
         if (AppPreferences.getIsAuth()) {
-            //viewModel.changeProfile()
+            viewModel.initGambler() {
+                toLog("initGambler: $GAMBLER")
+            }
 
             toLog("prepareRootNavController -> GAMBLER: $GAMBLER")
 
-            if (GAMBLER.photoUrl != EMPTY) loadAppBarPhoto()
+            //if (GAMBLER.photoUrl != EMPTY) loadAppBarPhoto()
 
             graph.setStartDestination(
                 if (isProfileFilled(GAMBLER)) {

@@ -2,6 +2,7 @@ package com.example.tote_test.ui.tabs.profile
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -202,13 +203,14 @@ class ProfileFragment : Fragment() {
 
         toLog("observeProfile -> binding.profilePhoto.tag: ${binding.profilePhoto.tag}")
         toLog("observeProfile -> profile.photoUrl: ${it.photoUrl}")
+
         if (binding.profilePhoto.tag != EMPTY) {
             loadProfilePhoto(binding.profilePhoto.tag.toString())
         } else if (it.photoUrl != EMPTY) {
             loadProfilePhoto(it.photoUrl)
         }
 
-        initFieldPhotoUri()
+        //initFieldPhotoUri()
     }
 
     private fun observePhotoUri() = viewModel.photoUri.observe(viewLifecycleOwner) {
@@ -219,7 +221,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun observeInProgress() = viewModel.inProgress.observe(viewLifecycleOwner) {
-        toLog("observeInProgress -> inProgress: $it")
         if (it) {
             binding.profileProgressBar.visibility = View.VISIBLE
         } else {

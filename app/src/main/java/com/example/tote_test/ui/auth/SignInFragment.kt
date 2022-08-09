@@ -30,7 +30,7 @@ class SignInFragment : Fragment() {
 
         //viewModel = ViewModelProvider(this)[SignInViewModel::class.java]
 
-        observeGambler()
+        //observeGambler()
 
         binding = FragmentSignInBinding.inflate(layoutInflater, container, false)
 
@@ -77,22 +77,12 @@ class SignInFragment : Fragment() {
         EMAIL = binding.signInInputEmail.text.toString().trim()
         PASSWORD = binding.signInInputPassword.text.toString().trim()
 
-        viewModel.auth()
+        //viewModel.auth()
 
-        /*viewModel.auth {
-            toLog("login -> GAMBLER: $GAMBLER")
+        viewModel.auth {
+            toLog("SignInFragment -> login -> GAMBLER: $GAMBLER")
             AppPreferences.setIsAuth(true)
-            findTopNavController().navigate(R.id.action_signInFragment_to_tabsFragment)
-        }*/
-    }
-
-    private fun observeGambler() = viewModel.gambler.observe(viewLifecycleOwner) {
-        toLog("observeGambler -> GAMBLER: $GAMBLER")
-        //GAMBLER = it
-        //toLog("observeGambler -> GAMBLER after: $GAMBLER")
-
-        if (GAMBLER.id.isNotBlank()) {
-            AppPreferences.setIsAuth(true)
+            loadAppBarPhoto()
 
             if (isProfileFilled(GAMBLER)) {
                 findTopNavController().navigate(R.id.action_signInFragment_to_tabsFragment)
@@ -100,8 +90,24 @@ class SignInFragment : Fragment() {
                 findTopNavController().navigate(R.id.action_signInFragment_to_profileFragment)
             }
         }
+    }
+
+    /*private fun observeGambler() = viewModel.gambler.observe(viewLifecycleOwner) {
+        toLog("SignInFragment -> observeGambler -> GAMBLER: $GAMBLER")
+        GAMBLER = it
+        toLog("SignInFragment -> observeGambler -> GAMBLER after: $GAMBLER")
+
+        *//*if (GAMBLER.id.isNotBlank()) {
+            AppPreferences.setIsAuth(true)
+
+            if (isProfileFilled(GAMBLER)) {
+                findTopNavController().navigate(R.id.action_signInFragment_to_tabsFragment)
+            } else {
+                findTopNavController().navigate(R.id.action_signInFragment_to_profileFragment)
+            }
+        }*//*
 
             //loadAppBarPhoto()
 
-    }
+    }*/
 }

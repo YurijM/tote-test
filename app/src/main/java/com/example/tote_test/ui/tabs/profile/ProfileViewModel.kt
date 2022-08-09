@@ -53,19 +53,11 @@ class ProfileViewModel : ViewModel() {
     }
 
     private fun getGamblerLiveData() = viewModelScope.launch(Dispatchers.IO) {
-        //showProgress()
         REPOSITORY.getGamblerLiveData(_profile)
-
-        /*viewModelScope.launch(Dispatchers.IO) {
-            hideProgress()
-        }*/
     }
 
     fun saveGamblerToDB(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
-        viewModelScope.launch {
-            toLog("saveGamblerToDB -> showProgress")
-            showProgress()
-        }
+        showProgress()
 
         val profile: GamblerModel = _profile.value as GamblerModel
 
@@ -77,10 +69,7 @@ class ProfileViewModel : ViewModel() {
         dataMap[GAMBLER_GENDER] = profile.gender
 
         REPOSITORY.saveGamblerToDB(dataMap) {
-            viewModelScope.launch {
-                toLog("saveGamblerToDB -> hideProgress")
-                hideProgress()
-            }
+            hideProgress()
 
             onSuccess()
         }
@@ -176,10 +165,7 @@ class ProfileViewModel : ViewModel() {
             return@launch
         }
 
-        viewModelScope.launch {
-            toLog("saveImageToStorage -> showProgress")
-            showProgress()
-        }
+        showProgress()
 
         val path = REF_STORAGE_ROOT.child(FOLDER_PROFILE_PHOTO).child(CURRENT_ID)
 
@@ -190,10 +176,7 @@ class ProfileViewModel : ViewModel() {
                         REPOSITORY.getUrlFromStorage(path) { url ->
                             viewModelScope.launch(Dispatchers.IO) {
                                 REPOSITORY.savePhotoUrlToDB(url) {
-                                    viewModelScope.launch {
-                                        toLog("saveImageToStorage -> hideProgress")
-                                        hideProgress()
-                                    }
+                                    hideProgress()
                                     onSuccess(url)
                                 }
                             }
