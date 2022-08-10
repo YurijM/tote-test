@@ -55,15 +55,22 @@ class MainActivity : AppCompatActivity() {
 
         REPOSITORY = FirebaseRepository()
 
-        initFirebase()
+        initFirebase() 
 
-        //viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        toLog("MainActivity -> observeGambler before: $GAMBLER")
+        observeGambler()
 
         AppPreferences.getPreferences(this)
 
-        setSupportActionBar(binding.toolbar)
+        if (AppPreferences.getIsAuth()) {
+            toLog("MainActivity -> getGambler before: $GAMBLER")
+            viewModel.getGambler {
+                toLog("MainActivity -> getGambler after: $GAMBLER")
+                viewModel.changeGambler(GAMBLER)
+            }
+        }
 
-        observeGambler()
+        setSupportActionBar(binding.toolbar)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         delegate.applyDayNight()
@@ -87,20 +94,16 @@ class MainActivity : AppCompatActivity() {
         setCopyright()
     }
 
-    private fun observeGambler() = viewModel.profile.observe(this) {
-        GAMBLER = it
-
-        toLog("MainActivity -> observeGambler -> GAMBLER: $GAMBLER")
-        toLog("MainActivity -> observeGambler -> it: $it")
-
+    private fun observeGambler() = viewModel.gambler.observe(this) {
         val gamblerPhoto = binding.gamblerPhoto
 
         if (it.photoUrl == EMPTY) {
             gamblerPhoto.visibility = View.GONE
         } else if (it.photoUrl != gamblerPhoto.tag.toString()) {
+            toLog("MainActivity -> observeGambler:")
+            toLog("GAMBLER: $GAMBLER")
+            toLog("it: $it")
             loadAppBarPhoto()
-
-            //gamblerPhoto.visibility = View.VISIBLE
         }
     }
 
@@ -141,33 +144,14 @@ class MainActivity : AppCompatActivity() {
     private fun prepareRootNavController(navController: NavController) {
         val graph = navController.navInflater.inflate(getMainNavigationGraphId())
 
-        /* graph.setStartDestination(
-             if (isSignedIn) {
-                 getTabsDestination()
-             } else {
-                 getSignInDestination()
-             }
-         )
-         navController.graph = graph*/
 
-        if (AppPreferences.getIsAuth()) {
-            viewModel.initGambler() {
-                toLog("initGambler: $GAMBLER")
+        graph.setStartDestination(
+            if (isProfileFilled(GAMBLER)) {
+                getTabsDestination()
+            } else {
+                getProfileDestination()
             }
-
-            toLog("prepareRootNavController -> GAMBLER: $GAMBLER")
-
-            //if (GAMBLER.photoUrl != EMPTY) loadAppBarPhoto()
-
-            graph.setStartDestination(
-                if (isProfileFilled(GAMBLER)) {
-                    getTabsDestination()
-                } else {
-                    getProfileDestination()
-                }
-            )
-        }
-
+        )
         if (graph.startDestinationId != this.navController?.graph?.startDestinationId) {
             navController.graph = graph
         }
@@ -195,25 +179,25 @@ class MainActivity : AppCompatActivity() {
         return startDestinations.contains(destination.id)
     }
 
-    /*private fun setStartFragment() {
-        toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
+/*private fun setStartFragment() {
+    toLog("${javaClass.simpleName} - ${object {}.javaClass.enclosingMethod?.name}")
 
-        val graph = navController.navInflater.inflate(getMainNavigationGraphId())
+    val graph = navController.navInflater.inflate(getMainNavigationGraphId())
 
-        if (isSignedIn()) {
-            graph.setStartDestination(
-                if (isProfileFilled()) {
-                    getRatingDestination()
-                } else {
-                    getProfileDestination()
-                }
-            )
-        }
+    if (isSignedIn()) {
+        graph.setStartDestination(
+            if (isProfileFilled()) {
+                getRatingDestination()
+            } else {
+                getProfileDestination()
+            }
+        )
+    }
 
-        if (graph.startDestinationId != navController.graph.startDestinationId) {
-            navController.graph = graph
-        }
-    }*/
+    if (graph.startDestinationId != navController.graph.startDestinationId) {
+        navController.graph = graph
+    }
+}*/
 
     private fun getMainNavigationGraphId(): Int = R.navigation.main_graph
 

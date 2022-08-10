@@ -13,7 +13,7 @@ class SignInViewModel : ViewModel() {
     val gambler: LiveData<GamblerModel> = _gambler*/
 
     private fun initGambler(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
-        REPOSITORY.initGambler {
+        REPOSITORY.getGambler {
             onSuccess()
         }
     }
