@@ -21,7 +21,11 @@ class ProfileViewModel : ViewModel() {
     val photoUri: LiveData<Uri> = _photoUri
 
     init {
-        getGamblerLiveData()
+        //getGamblerLiveData()
+        /*getGambler {
+            _profile.value = GAMBLER
+            toLog("ProfileViewModel -> init -> GAMBLER: $GAMBLER")
+        }*/
     }
 
     fun changeNickname(nickname: String) {
@@ -52,9 +56,9 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-    private fun getGamblerLiveData() = viewModelScope.launch(Dispatchers.IO) {
+    /*private fun getGamblerLiveData() = viewModelScope.launch(Dispatchers.IO) {
         REPOSITORY.getGamblerLiveData(_profile)
-    }
+    }*/
 
     fun saveGamblerToDB(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
         showProgress()

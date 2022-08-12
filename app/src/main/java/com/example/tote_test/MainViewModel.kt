@@ -23,11 +23,11 @@ class MainViewModel() : ViewModel() {
         REPOSITORY.getGamblerLiveData(_gambler)
     }
 
-    fun getGambler(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+    /*fun getGambler(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
         REPOSITORY.getGambler {
             onSuccess()
         }
-    }
+    }*/
 
     fun changeGambler(gambler: GamblerModel) {
         _gambler.value = gambler

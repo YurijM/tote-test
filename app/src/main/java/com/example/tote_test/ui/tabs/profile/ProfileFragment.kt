@@ -34,6 +34,8 @@ class ProfileFragment : Fragment() {
     private var isGenderFilled = false
     private var isPhotoUriFilled = false
 
+    var localGambler = GAMBLER
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -210,6 +212,8 @@ class ProfileFragment : Fragment() {
             loadProfilePhoto(it.photoUrl)
         }
 
+        localGambler = it
+
         //initFieldPhotoUri()
     }
 
@@ -231,11 +235,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun saveProfilePhoto() {
-        val tag = binding.profilePhoto.tag.toString()
+        //val tag = binding.profilePhoto.tag.toString()
 
-        toLog("saveProfilePhoto -> tag: $tag")
+        //toLog("saveProfilePhoto -> tag: $tag")
         toLog("saveProfilePhoto -> GAMBLER.photoUrl: ${GAMBLER.photoUrl}")
-        if (tag.isNotBlank() && tag != EMPTY) {
+        //if (tag.isNotBlank() && tag != EMPTY) {
             viewModel.saveImageToStorage {
                 binding.profilePhoto.tag = it
 
@@ -244,7 +248,7 @@ class ProfileFragment : Fragment() {
 
                 //toGamblers()
             }
-        }
+        //}
     }
 
     /*private fun saveProfilePhoto() {
@@ -294,9 +298,19 @@ class ProfileFragment : Fragment() {
 
             viewModel.saveGamblerToDB {
                 toLog("saveProfile")
-                saveProfilePhoto()
-            }
 
+                val tag = binding.profilePhoto.tag.toString()
+                toLog("saveProfile -> tag: $tag")
+                if (tag.isNotBlank() && tag != EMPTY) {
+                    saveProfilePhoto()
+                }
+
+                //GAMBLER = localGambler
+                //APP_ACTIVITY.viewModel.changeGambler(GAMBLER)
+                toLog("ProfileFragment -> saveProfile -> GAMBLER: $GAMBLER")
+
+                toGamblers()
+            }
             //viewModel.hideProgress()
         }
     }

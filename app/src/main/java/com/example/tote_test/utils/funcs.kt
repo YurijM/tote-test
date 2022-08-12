@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -15,6 +17,8 @@ import com.example.tote_test.models.GamblerModel
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 fun showToast(message: String) {
     Toast.makeText(APP_ACTIVITY, message, Toast.LENGTH_LONG).show()
@@ -108,4 +112,10 @@ fun loadAppBarPhoto() {
 fun Fragment.findTopNavController(): NavController {
     val topLevelHost = requireActivity().supportFragmentManager.findFragmentById(R.id.tabsContainer) as NavHostFragment?
     return topLevelHost?.navController ?: findNavController()
+}
+
+fun ViewModel.getGambler(onSuccess: () -> Unit) = viewModelScope.launch(Dispatchers.IO) {
+    REPOSITORY.getGambler {
+        onSuccess()
+    }
 }

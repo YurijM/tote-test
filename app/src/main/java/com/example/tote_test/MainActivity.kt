@@ -22,7 +22,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var navController: NavController? = null
-    private val viewModel: MainViewModel by viewModels()
+    val viewModel: MainViewModel by viewModels()
 
     private var topLevelDestinations = setOf(
         getMainDestination(),
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             toLog("MainActivity -> getGambler before: $GAMBLER")
             viewModel.getGambler {
                 toLog("MainActivity -> getGambler after: $GAMBLER")
-                viewModel.changeGambler(GAMBLER)
+                //viewModel.changeGambler(GAMBLER)
             }
         }
 
@@ -145,13 +145,16 @@ class MainActivity : AppCompatActivity() {
         val graph = navController.navInflater.inflate(getMainNavigationGraphId())
 
 
-        graph.setStartDestination(
-            if (isProfileFilled(GAMBLER)) {
-                getTabsDestination()
-            } else {
-                getProfileDestination()
-            }
-        )
+        if (AppPreferences.getIsAuth()) {
+            graph.setStartDestination(
+                if (isProfileFilled(GAMBLER)) {
+                    getTabsDestination()
+                } else {
+                    getProfileDestination()
+                }
+            )
+        }
+
         if (graph.startDestinationId != this.navController?.graph?.startDestinationId) {
             navController.graph = graph
         }
